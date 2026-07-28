@@ -1,20 +1,20 @@
-# @yaoshang/ui
+# mui
 
-药商云共享 React UI 组件库。组件基于 shadcn/ui、Base UI、Tailwind CSS，
-并保留 `base-sera` 官方组件源码与主题。
+基于 shadcn/ui、Base UI 和 Tailwind CSS 的共享 React UI 组件库，并保留
+`base-sera` 官方组件源码与主题。
 
 ## 安装与使用
 
 发布到包仓库后，在业务项目中安装：
 
 ```bash
-pnpm add @yaoshang/ui
+pnpm add mui
 ```
 
 组件入口会自动加载组件库样式，不需要额外导入 CSS：
 
 ```tsx
-import { Button, Card, CardContent } from "@yaoshang/ui"
+import { Button, Card, CardContent } from "mui"
 
 export function Example() {
   return (
