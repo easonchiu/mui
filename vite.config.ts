@@ -1,14 +1,49 @@
-import path from "path"
+import { fileURLToPath } from "node:url"
+
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
+import { defineConfig, type Plugin } from "vite"
 
-// https://vite.dev/config/
+function injectLibraryStyles(): Plugin {
+  return {
+    name: "inject-library-styles",
+    enforce: "post",
+    generateBundle(_options, bundle) {
+      for (const output of Object.values(bundle)) {
+        if (output.type === "chunk" && output.isEntry) {
+          output.code = `import "./styles.css";\n${output.code}`
+        }
+      }
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+  plugins: [react(), tailwindcss(), injectLibraryStyles()],
+  build: {
+    lib: {
+      entry: "src/entry.ts",
+      formats: ["es"],
+      fileName: "index",
+      cssFileName: "styles",
+    },
+    rollupOptions: {
+      external: (id) =>
+        id === "react" ||
+        id.startsWith("react/") ||
+        id === "react-dom" ||
+        id.startsWith("react-dom/") ||
+        id === "@base-ui/react" ||
+        id.startsWith("@base-ui/react/") ||
+        id === "class-variance-authority" ||
+        id === "clsx" ||
+        id === "lucide-react" ||
+        id === "tailwind-merge",
     },
   },
 })
