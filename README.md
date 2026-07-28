@@ -29,6 +29,14 @@ export function Example() {
 
 业务项目可以在组件库样式之后覆盖 shadcn CSS 变量，定制品牌主题。
 
+## 已包含组件
+
+除 Button 和 Card 外，当前还包含 Alert Dialog、Avatar、Badge、Breadcrumb、
+Button Group、Checkbox、Combobox、Table、Dialog、Drawer、Dropdown Menu、
+Field、Input、Input Group、Label、Pagination、Popover、Progress、Select、
+Sheet、Skeleton、Slider、Spinner、Switch、Tabs、Textarea、Tooltip 和
+Separator。
+
 ## 本地开发
 
 ```bash
@@ -36,7 +44,8 @@ pnpm install
 pnpm storybook
 ```
 
-Storybook 默认运行在 `http://localhost:6006`。
+Storybook 默认运行在 `http://localhost:6006`。每个组件都有独立的展示页面，
+并按基础组件、表单组件、导航组件、数据展示、浮层组件和反馈组件分类。
 
 ## 添加组件
 
