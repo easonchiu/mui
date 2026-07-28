@@ -1,8 +1,9 @@
 "use client"
 
+import * as React from "react"
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 function TooltipProvider({
   delay = 0,
@@ -17,8 +18,19 @@ function TooltipProvider({
   )
 }
 
-function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
-  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+type TooltipProps = Omit<TooltipPrimitive.Root.Props, "children"> & {
+  children?: React.ReactNode
+  trigger?: React.ReactElement
+  contentProps?: Omit<React.ComponentProps<typeof TooltipContent>, "children">
+}
+
+function Tooltip({ trigger, contentProps, children, ...props }: TooltipProps) {
+  return (
+    <TooltipPrimitive.Root data-slot="tooltip" {...props}>
+      {trigger && <TooltipTrigger render={trigger} />}
+      <TooltipContent {...contentProps}>{children}</TooltipContent>
+    </TooltipPrimitive.Root>
+  )
 }
 
 function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
@@ -63,4 +75,5 @@ function TooltipContent({
   )
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+export { Tooltip, TooltipProvider }
+export type { TooltipProps }

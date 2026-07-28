@@ -42,6 +42,13 @@ export const Variants: Story = {
   ),
 }
 
+export const DarkTheme: Story = {
+  ...Variants,
+  globals: {
+    theme: "dark",
+  },
+}
+
 export const WithIcon: Story = {
   render: () => (
     <Badge>

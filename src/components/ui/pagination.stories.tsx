@@ -1,14 +1,7 @@
+import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "./pagination"
+import { Pagination } from "./pagination"
 
 const meta = {
   title: "导航组件/Pagination",
@@ -17,33 +10,47 @@ const meta = {
   parameters: {
     layout: "padded",
   },
+  args: {
+    total: 200,
+  },
 } satisfies Meta<typeof Pagination>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-  render: () => (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href="#" text="上一页" />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#" isActive>
-            1
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">2</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href="#" text="下一页" />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
-  ),
+export const Default: Story = {}
+
+function ControlledPagination(props: React.ComponentProps<typeof Pagination>) {
+  const [current, setCurrent] = React.useState(8)
+
+  return (
+    <Pagination
+      {...props}
+      current={current}
+      onChange={(page) => setCurrent(page)}
+    />
+  )
+}
+
+export const Controlled: Story = {
+  render: (args) => <ControlledPagination {...args} />,
+}
+
+export const FewPages: Story = {
+  args: {
+    total: 30,
+  },
+}
+
+export const Disabled: Story = {
+  args: {
+    current: 5,
+    disabled: true,
+  },
+}
+
+export const DarkTheme: Story = {
+  globals: {
+    theme: "dark",
+  },
 }

@@ -98,6 +98,41 @@ export const Disabled: Story = {
   },
 }
 
+export const Loading: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button loading>默认</Button>
+      <Button variant="secondary" loading>
+        次要
+      </Button>
+      <Button variant="outline" loading>
+        描边
+      </Button>
+      <Button variant="ghost" loading>
+        幽灵
+      </Button>
+      <Button variant="destructive" loading>
+        危险
+      </Button>
+      <Button variant="link" loading>
+        链接
+      </Button>
+    </div>
+  ),
+  parameters: {
+    a11y: {
+      test: "todo",
+    },
+  },
+}
+
+export const LoadingDarkTheme: Story = {
+  ...Loading,
+  globals: {
+    theme: "dark",
+  },
+}
+
 export const DarkTheme: Story = {
   ...AllVariants,
   globals: {

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { Label } from "./label"
 import { Switch } from "./switch"
 
 const meta = {
@@ -13,25 +12,34 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => (
-    <div className="flex items-center gap-3">
-      <Switch id="switch-public" defaultChecked />
-      <Label htmlFor="switch-public">公开展示</Label>
-    </div>
-  ),
+  args: {
+    text: "公开展示",
+    defaultChecked: true,
+  },
 }
 
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-6">
-      <div className="flex items-center gap-3">
-        <Switch id="switch-small" size="sm" defaultChecked />
-        <Label htmlFor="switch-small">小尺寸</Label>
-      </div>
-      <div className="flex items-center gap-3">
-        <Switch id="switch-default" defaultChecked />
-        <Label htmlFor="switch-default">默认尺寸</Label>
-      </div>
+      <Switch size="sm" text="小尺寸" defaultChecked />
+      <Switch text="默认尺寸" defaultChecked />
     </div>
   ),
+}
+
+export const Disabled: Story = {
+  args: {
+    text: "不可用选项",
+    disabled: true,
+  },
+}
+
+export const DarkTheme: Story = {
+  args: {
+    text: "公开展示",
+    defaultChecked: true,
+  },
+  globals: {
+    theme: "dark",
+  },
 }

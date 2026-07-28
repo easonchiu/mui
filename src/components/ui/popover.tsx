@@ -1,10 +1,40 @@
 import * as React from "react"
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
-function Popover({ ...props }: PopoverPrimitive.Root.Props) {
-  return <PopoverPrimitive.Root data-slot="popover" {...props} />
+type PopoverProps = Omit<PopoverPrimitive.Root.Props, "children"> & {
+  children?: React.ReactNode
+  trigger?: React.ReactElement
+  title?: React.ReactNode
+  description?: React.ReactNode
+  contentProps?: Omit<React.ComponentProps<typeof PopoverContent>, "children">
+}
+
+function Popover({
+  trigger,
+  title,
+  description,
+  contentProps,
+  children,
+  ...props
+}: PopoverProps) {
+  return (
+    <PopoverPrimitive.Root data-slot="popover" {...props}>
+      {trigger && <PopoverTrigger render={trigger} />}
+      <PopoverContent {...contentProps}>
+        {(title || description) && (
+          <PopoverHeader>
+            {title && <PopoverTitle>{title}</PopoverTitle>}
+            {description && (
+              <PopoverDescription>{description}</PopoverDescription>
+            )}
+          </PopoverHeader>
+        )}
+        {children}
+      </PopoverContent>
+    </PopoverPrimitive.Root>
+  )
 }
 
 function PopoverTrigger({ ...props }: PopoverPrimitive.Trigger.Props) {
@@ -81,11 +111,5 @@ function PopoverDescription({
   )
 }
 
-export {
-  Popover,
-  PopoverContent,
-  PopoverDescription,
-  PopoverHeader,
-  PopoverTitle,
-  PopoverTrigger,
-}
+export { Popover }
+export type { PopoverProps }

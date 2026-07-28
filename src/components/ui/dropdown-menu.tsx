@@ -1,15 +1,187 @@
 import * as React from "react"
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 import { ChevronRightIcon, CheckIcon } from "lucide-react"
 
-function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
-  return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />
+type DropdownMenuClickInfo = {
+  key: React.Key
 }
 
-function DropdownMenuPortal({ ...props }: MenuPrimitive.Portal.Props) {
-  return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />
+type DropdownMenuBaseItem = {
+  key: React.Key
+  label: React.ReactNode
+  icon?: React.ReactNode
+  disabled?: boolean
+  shortcut?: React.ReactNode
+}
+
+type DropdownMenuActionItem = DropdownMenuBaseItem & {
+  type?: "item"
+  danger?: boolean
+  onClick?: (info: DropdownMenuClickInfo) => void
+  children?: ReadonlyArray<DropdownMenuItemConfig>
+}
+
+type DropdownMenuCheckboxConfig = DropdownMenuBaseItem & {
+  type: "checkbox"
+  checked: boolean
+  onCheckedChange?: (checked: boolean) => void
+}
+
+type DropdownMenuRadioConfig = {
+  type: "radio"
+  key: React.Key
+  label?: React.ReactNode
+  value: string
+  onValueChange?: (value: string) => void
+  options: ReadonlyArray<DropdownMenuBaseItem & { value: string }>
+}
+
+type DropdownMenuGroupConfig = {
+  type: "group"
+  key: React.Key
+  label?: React.ReactNode
+  children: ReadonlyArray<DropdownMenuItemConfig>
+}
+
+type DropdownMenuDividerConfig = {
+  type: "divider"
+  key?: React.Key
+}
+
+type DropdownMenuItemConfig =
+  | DropdownMenuActionItem
+  | DropdownMenuCheckboxConfig
+  | DropdownMenuRadioConfig
+  | DropdownMenuGroupConfig
+  | DropdownMenuDividerConfig
+
+type DropdownMenuProps = Omit<MenuPrimitive.Root.Props, "children"> & {
+  items: ReadonlyArray<DropdownMenuItemConfig>
+  trigger?: React.ReactElement
+  onItemClick?: (info: DropdownMenuClickInfo) => void
+  contentProps?: Omit<
+    React.ComponentProps<typeof DropdownMenuContent>,
+    "children"
+  >
+}
+
+function DropdownMenu({
+  trigger,
+  items,
+  onItemClick,
+  contentProps,
+  ...props
+}: DropdownMenuProps) {
+  return (
+    <MenuPrimitive.Root data-slot="dropdown-menu" {...props}>
+      {trigger && <DropdownMenuTrigger render={trigger} />}
+      <DropdownMenuContent {...contentProps}>
+        {renderMenuItems(items, onItemClick)}
+      </DropdownMenuContent>
+    </MenuPrimitive.Root>
+  )
+}
+
+function renderMenuItems(
+  items: ReadonlyArray<DropdownMenuItemConfig>,
+  onItemClick?: (info: DropdownMenuClickInfo) => void
+): React.ReactNode {
+  return items.map((item, index) => {
+    if (item.type === "divider") {
+      return <DropdownMenuSeparator key={item.key ?? `divider-${index}`} />
+    }
+
+    if (item.type === "group") {
+      return (
+        <DropdownMenuGroup key={item.key}>
+          {item.label && <DropdownMenuLabel>{item.label}</DropdownMenuLabel>}
+          {renderMenuItems(item.children, onItemClick)}
+        </DropdownMenuGroup>
+      )
+    }
+
+    if (item.type === "checkbox") {
+      return (
+        <DropdownMenuCheckboxItem
+          key={item.key}
+          checked={item.checked}
+          disabled={item.disabled}
+          onCheckedChange={(checked) => item.onCheckedChange?.(checked)}
+        >
+          {item.icon}
+          {item.label}
+          {item.shortcut && (
+            <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
+          )}
+        </DropdownMenuCheckboxItem>
+      )
+    }
+
+    if (item.type === "radio") {
+      return (
+        <DropdownMenuGroup key={item.key}>
+          {item.label && <DropdownMenuLabel>{item.label}</DropdownMenuLabel>}
+          <DropdownMenuRadioGroup
+            value={item.value}
+            onValueChange={(value) => item.onValueChange?.(String(value))}
+          >
+            {item.options.map((option) => (
+              <DropdownMenuRadioItem
+                key={option.key}
+                value={option.value}
+                disabled={option.disabled}
+              >
+                {option.icon}
+                {option.label}
+                {option.shortcut && (
+                  <DropdownMenuShortcut>{option.shortcut}</DropdownMenuShortcut>
+                )}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuGroup>
+      )
+    }
+
+    if (item.children?.length) {
+      return (
+        <DropdownMenuSub key={item.key}>
+          <DropdownMenuSubTrigger disabled={item.disabled}>
+            {item.icon}
+            {item.label}
+            {item.shortcut && (
+              <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
+            )}
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            {renderMenuItems(item.children, onItemClick)}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+      )
+    }
+
+    const clickInfo = { key: item.key }
+
+    return (
+      <DropdownMenuItem
+        key={item.key}
+        disabled={item.disabled}
+        variant={item.danger ? "destructive" : "default"}
+        onClick={() => {
+          item.onClick?.(clickInfo)
+          onItemClick?.(clickInfo)
+        }}
+      >
+        {item.icon}
+        {item.label}
+        {item.shortcut && (
+          <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
+        )}
+      </DropdownMenuItem>
+    )
+  })
 }
 
 function DropdownMenuTrigger({ ...props }: MenuPrimitive.Trigger.Props) {
@@ -39,7 +211,10 @@ function DropdownMenuContent({
       >
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"
-          className={cn("z-50 max-h-(--available-height) w-(--anchor-width) min-w-48 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xs bg-popover p-1.5 text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+          className={cn(
+            "z-50 max-h-(--available-height) w-(--anchor-width) min-w-48 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xs bg-popover p-1.5 text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+            className
+          )}
           {...props}
         />
       </MenuPrimitive.Positioner>
@@ -133,7 +308,10 @@ function DropdownMenuSubContent({
   return (
     <DropdownMenuContent
       data-slot="dropdown-menu-sub-content"
-      className={cn("w-auto min-w-36 rounded-none bg-popover p-1.5 text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+      className={cn(
+        "w-auto min-w-36 rounded-none bg-popover p-1.5 text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+        className
+      )}
       align={align}
       alignOffset={alignOffset}
       side={side}
@@ -168,8 +346,7 @@ function DropdownMenuCheckboxItem({
         data-slot="dropdown-menu-checkbox-item-indicator"
       >
         <MenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon
-          />
+          <CheckIcon />
         </MenuPrimitive.CheckboxItemIndicator>
       </span>
       {children}
@@ -209,8 +386,7 @@ function DropdownMenuRadioItem({
         data-slot="dropdown-menu-radio-item-indicator"
       >
         <MenuPrimitive.RadioItemIndicator>
-          <CheckIcon
-          />
+          <CheckIcon />
         </MenuPrimitive.RadioItemIndicator>
       </span>
       {children}
@@ -247,20 +423,5 @@ function DropdownMenuShortcut({
   )
 }
 
-export {
-  DropdownMenu,
-  DropdownMenuPortal,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuLabel,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
-}
+export { DropdownMenu }
+export type { DropdownMenuClickInfo, DropdownMenuItemConfig, DropdownMenuProps }

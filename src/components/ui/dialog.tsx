@@ -1,12 +1,85 @@
 import * as React from "react"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "../../lib/utils"
+import { Button } from "./button"
 import { XIcon } from "lucide-react"
 
-function Dialog({ ...props }: DialogPrimitive.Root.Props) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />
+type DialogProps = Omit<DialogPrimitive.Root.Props, "children"> & {
+  children?: React.ReactNode
+  trigger?: React.ReactElement
+  title: React.ReactNode
+  description?: React.ReactNode
+  okText?: React.ReactNode
+  cancelText?: React.ReactNode
+  onOk?: () => void
+  onCancel?: () => void
+  confirmLoading?: boolean
+  showCancel?: boolean
+  closable?: boolean
+  footer?: React.ReactNode | false
+  actionProps?: Omit<React.ComponentProps<typeof Button>, "children">
+  cancelProps?: Omit<React.ComponentProps<typeof Button>, "children">
+  contentProps?: Omit<React.ComponentProps<typeof DialogContent>, "children">
+}
+
+function Dialog({
+  trigger,
+  contentProps,
+  children,
+  title,
+  description,
+  okText = "确定",
+  cancelText = "取消",
+  onOk,
+  onCancel,
+  confirmLoading = false,
+  showCancel = true,
+  closable = true,
+  footer,
+  actionProps,
+  cancelProps,
+  ...props
+}: DialogProps) {
+  return (
+    <DialogPrimitive.Root data-slot="dialog" {...props}>
+      {trigger && <DialogTrigger render={trigger} />}
+      <DialogContent
+        {...contentProps}
+        showCloseButton={closable && contentProps?.showCloseButton !== false}
+      >
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          {description && <DialogDescription>{description}</DialogDescription>}
+        </DialogHeader>
+        {children}
+        {footer !== false && (
+          <DialogFooter>
+            {footer ?? (
+              <>
+                {showCancel && (
+                  <DialogButtonClose
+                    variant="outline"
+                    onClick={onCancel}
+                    {...cancelProps}
+                  >
+                    {cancelText}
+                  </DialogButtonClose>
+                )}
+                <DialogButtonClose
+                  loading={confirmLoading}
+                  onClick={onOk}
+                  {...actionProps}
+                >
+                  {okText}
+                </DialogButtonClose>
+              </>
+            )}
+          </DialogFooter>
+        )}
+      </DialogContent>
+    </DialogPrimitive.Root>
+  )
 }
 
 function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {
@@ -17,8 +90,16 @@ function DialogPortal({ ...props }: DialogPrimitive.Portal.Props) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
 }
 
-function DialogClose({ ...props }: DialogPrimitive.Close.Props) {
-  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
+function DialogButtonClose({
+  className,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  return (
+    <DialogPrimitive.Close
+      data-slot="dialog-button-close"
+      render={<Button className={cn(className)} {...props} />}
+    />
+  )
 }
 
 function DialogOverlay({
@@ -68,9 +149,8 @@ function DialogContent({
               />
             }
           >
-            <XIcon
-            />
-            <span className="sr-only">Close</span>
+            <XIcon />
+            <span className="sr-only">关闭</span>
           </DialogPrimitive.Close>
         )}
       </DialogPrimitive.Popup>
@@ -108,7 +188,7 @@ function DialogFooter({
       {children}
       {showCloseButton && (
         <DialogPrimitive.Close render={<Button variant="outline" />}>
-          Close
+          关闭
         </DialogPrimitive.Close>
       )}
     </div>
@@ -144,15 +224,5 @@ function DialogDescription({
   )
 }
 
-export {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
-}
+export { Dialog }
+export type { DialogProps }
