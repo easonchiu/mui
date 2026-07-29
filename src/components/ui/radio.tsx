@@ -29,14 +29,14 @@ function Radio({ text, id, className, ...props }: RadioProps) {
       id={radioId}
       data-slot="radio"
       className={cn(
-        "peer relative flex aspect-square size-4.5 shrink-0 rounded-full border border-input bg-transparent transition-shadow outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary",
+        "peer relative flex aspect-square size-4.5 shrink-0 rounded-full border border-input bg-transparent transition-[background-color,border-color,box-shadow] duration-150 outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary",
         className
       )}
       {...props}
     >
       <RadioPrimitive.Indicator
         data-slot="radio-indicator"
-        className="flex size-full items-center justify-center"
+        className="flex size-full items-center justify-center transition-[opacity,transform] duration-150 data-ending-style:scale-50 data-ending-style:opacity-0 data-starting-style:scale-50 data-starting-style:opacity-0 motion-reduce:transition-none"
       >
         <span className="size-2 rounded-full bg-primary-foreground" />
       </RadioPrimitive.Indicator>

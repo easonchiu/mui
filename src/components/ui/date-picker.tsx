@@ -84,7 +84,7 @@ function DatePicker(props: DatePickerProps) {
           disabled={disabled}
           data-empty={!selectedDate || undefined}
           className={cn(
-            "min-w-48 justify-start text-left font-normal tracking-normal normal-case data-empty:text-muted-foreground",
+            "min-w-48 justify-start text-left font-normal tracking-normal normal-case hover:border-ring/50 hover:bg-input/10 data-empty:text-muted-foreground",
             className
           )}
         >

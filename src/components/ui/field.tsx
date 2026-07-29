@@ -80,7 +80,7 @@ function Field({
         <p
           id={descriptionId}
           data-slot="field-description"
-          className="text-left text-sm leading-normal font-normal tracking-normal text-muted-foreground normal-case group-data-[invalid=true]/field:text-destructive"
+          className="text-left text-xs leading-normal font-normal tracking-normal text-muted-foreground normal-case group-data-[invalid=true]/field:text-destructive"
         >
           {description}
         </p>
