@@ -17,6 +17,7 @@ const meta = {
       options: [
         "default",
         "destructive",
+        "danger",
         "outline",
         "secondary",
         "ghost",
@@ -52,6 +53,8 @@ export const AllVariants: Story = {
       <Button variant="outline">描边</Button>
       <Button variant="ghost">幽灵</Button>
       <Button variant="link">链接</Button>
+      <Button variant="destructive">危险</Button>
+      <Button variant="danger">危险</Button>
     </div>
   ),
 }
@@ -65,6 +68,13 @@ export const Destructive: Story = {
     a11y: {
       test: "todo",
     },
+  },
+}
+
+export const Danger: Story = {
+  args: {
+    variant: "danger",
+    children: "确认删除",
   },
 }
 
@@ -112,6 +122,9 @@ export const Loading: Story = {
         幽灵
       </Button>
       <Button variant="destructive" loading>
+        警告
+      </Button>
+      <Button variant="danger" loading>
         危险
       </Button>
       <Button variant="link" loading>

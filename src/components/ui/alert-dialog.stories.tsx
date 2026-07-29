@@ -22,8 +22,6 @@ export const Default: Story = {
     <AlertDialog
       {...args}
       trigger={<Button variant="outline">打开确认对话框</Button>}
-    >
-      发布操作会记录在组件的变更历史中。
-    </AlertDialog>
+    />
   ),
 }

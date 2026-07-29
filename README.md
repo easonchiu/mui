@@ -61,10 +61,14 @@ Select 的复杂场景仍可使用 `SelectRoot`、`SelectTrigger` 等内部结�
 ## 已包含组件
 
 除 Button 和 Card 外，当前还包含 Alert Dialog、Avatar、Badge、Breadcrumb、
-Checkbox、Combobox、Data Table、Dialog、Modal、Drawer、
-Dropdown Menu、Field、Form Item、Input、Pagination、
-Popover、Progress、Select、Skeleton、Slider、Spinner、Switch、Tabs、Textarea、
-Tooltip 和 Separator。
+Calendar、Checkbox、Combobox、Data Table、Date Picker、Range Picker、Dialog、Modal、Drawer、
+Dropdown Menu、Field、Form Item、Hover Card、Input、Pagination、
+Grid、Popover、Progress、Radio、Select、Skeleton、Slider、Spinner、Switch、
+Tabs、Textarea、Toast、Tooltip 和 Separator。
+
+Toast 需要在应用根部渲染一次 `Toaster`，之后可在任意位置使用
+`toast.success()`、`toast.error()` 或 `toast.add()` 发送通知。通知默认显示在
+页面右上角。
 
 ## 本地开发
 

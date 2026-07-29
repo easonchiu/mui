@@ -19,6 +19,14 @@ function injectLibraryStyles(): Plugin {
 }
 
 export default defineConfig({
+  optimizeDeps: {
+    include: [
+      "@base-ui/react/preview-card",
+      "@base-ui/react/radio",
+      "@base-ui/react/radio-group",
+      "@base-ui/react/toast",
+    ],
+  },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -42,7 +50,11 @@ export default defineConfig({
         id.startsWith("@base-ui/react/") ||
         id === "class-variance-authority" ||
         id === "clsx" ||
+        id === "date-fns" ||
+        id.startsWith("date-fns/") ||
         id === "lucide-react" ||
+        id === "react-day-picker" ||
+        id.startsWith("react-day-picker/") ||
         id === "tailwind-merge",
     },
   },

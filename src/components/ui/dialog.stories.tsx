@@ -19,6 +19,9 @@ export const Default: Story = {
     title: "编辑组件信息",
     description: "修改组件的显示名称。",
     okText: "保存",
+    actionProps: {
+      variant: "destructive",
+    }
   },
   render: (args) => (
     <Dialog {...args} trigger={<Button variant="outline">打开对话框</Button>}>
