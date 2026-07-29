@@ -38,7 +38,7 @@ function GridItem({ className, ...props }: GridItemProps) {
   return (
     <div
       data-slot="grid-item"
-      className={cn("min-w-0 bg-background p-6", className)}
+      className={cn("min-w-0 bg-background p-5", className)}
       {...props}
     />
   )
