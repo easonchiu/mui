@@ -14,6 +14,9 @@ const meta = {
       control: "select",
       options: ["start", "center", "end"],
     },
+    sideOffset: {
+      control: { type: "number", min: 0, step: 1 },
+    },
   },
 } satisfies Meta<typeof Popover>
 
@@ -61,5 +64,19 @@ export const Alignments: Story = {
         description="Popup 右边缘与按钮右边缘对齐。"
       />
     </div>
+  ),
+}
+
+export const Offset: Story = {
+  args: {
+    sideOffset: 12,
+  },
+  render: (args) => (
+    <Popover
+      {...args}
+      trigger={<Button variant="outline">带间距的浮层</Button>}
+      title="浮层间距"
+      description="浮层与触发按钮间隔 12px。"
+    />
   ),
 }

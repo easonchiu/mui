@@ -57,6 +57,9 @@ const meta = {
       control: "select",
       options: ["start", "center", "end"],
     },
+    sideOffset: {
+      control: { type: "number", min: 0, step: 1 },
+    },
   },
 } satisfies Meta<typeof DropdownMenu>
 
@@ -86,9 +89,7 @@ export const Hover: Story = {
     />
   ),
   play: async ({ canvas, canvasElement, userEvent }) => {
-    await userEvent.hover(
-      canvas.getByRole("button", { name: "悬停打开菜单" })
-    )
+    await userEvent.hover(canvas.getByRole("button", { name: "悬停打开菜单" }))
 
     await waitFor(() => {
       const content = canvasElement.ownerDocument.querySelector(
@@ -102,6 +103,18 @@ export const Hover: Story = {
       test: "todo",
     },
   },
+}
+
+export const Offset: Story = {
+  args: {
+    sideOffset: 12,
+  },
+  render: (args) => (
+    <DropdownMenu
+      {...args}
+      trigger={<Button variant="outline">带间距的菜单</Button>}
+    />
+  ),
 }
 
 export const Alignments: Story = {
