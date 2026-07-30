@@ -8,6 +8,11 @@ const meta = {
   title: "浮层组件/Tooltip",
   component: Tooltip,
   tags: ["autodocs"],
+  argTypes: {
+    sideOffset: {
+      control: { type: "number", min: 0, step: 1 },
+    },
+  },
 } satisfies Meta<typeof Tooltip>
 
 export default meta
@@ -24,6 +29,19 @@ export const Default: Story = {
         }
       >
         支付设置
+      </Tooltip>
+    </TooltipProvider>
+  ),
+}
+
+export const IncreasedOffset: Story = {
+  render: () => (
+    <TooltipProvider>
+      <Tooltip
+        sideOffset={12}
+        trigger={<Button variant="outline">增加间距</Button>}
+      >
+        sideOffset: 12px
       </Tooltip>
     </TooltipProvider>
   ),

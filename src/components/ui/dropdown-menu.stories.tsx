@@ -52,6 +52,12 @@ const meta = {
   args: {
     items,
   },
+  argTypes: {
+    align: {
+      control: "select",
+      options: ["start", "center", "end"],
+    },
+  },
 } satisfies Meta<typeof DropdownMenu>
 
 export default meta
@@ -96,6 +102,28 @@ export const Hover: Story = {
       test: "todo",
     },
   },
+}
+
+export const Alignments: Story = {
+  render: (args) => (
+    <div className="flex w-lg items-center justify-between">
+      <DropdownMenu
+        {...args}
+        align="start"
+        trigger={<Button variant="outline">左对齐</Button>}
+      />
+      <DropdownMenu
+        {...args}
+        align="center"
+        trigger={<Button variant="outline">居中对齐</Button>}
+      />
+      <DropdownMenu
+        {...args}
+        align="end"
+        trigger={<Button variant="outline">右对齐</Button>}
+      />
+    </div>
+  ),
 }
 
 export const Selectable: Story = {

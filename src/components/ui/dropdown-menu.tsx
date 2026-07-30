@@ -10,6 +10,8 @@ type DropdownMenuClickInfo = {
 
 type DropdownMenuTriggerMode = "click" | "hover"
 
+type DropdownMenuAlign = NonNullable<MenuPrimitive.Positioner.Props["align"]>
+
 type DropdownMenuBaseItem = {
   key: React.Key
   label: React.ReactNode
@@ -63,6 +65,7 @@ type DropdownMenuProps = Omit<MenuPrimitive.Root.Props, "children"> & {
   items: ReadonlyArray<DropdownMenuItemConfig>
   trigger?: React.ReactElement
   triggerMode?: DropdownMenuTriggerMode
+  align?: DropdownMenuAlign
   onItemClick?: (info: DropdownMenuClickInfo) => void
   contentProps?: Omit<
     React.ComponentProps<typeof DropdownMenuContent>,
@@ -73,6 +76,7 @@ type DropdownMenuProps = Omit<MenuPrimitive.Root.Props, "children"> & {
 function DropdownMenu({
   trigger,
   triggerMode = "click",
+  align,
   items,
   onItemClick,
   contentProps,
@@ -86,7 +90,10 @@ function DropdownMenu({
           openOnHover={triggerMode === "hover"}
         />
       )}
-      <DropdownMenuContent {...contentProps}>
+      <DropdownMenuContent
+        {...contentProps}
+        align={align ?? contentProps?.align}
+      >
         {renderMenuItems(items, onItemClick)}
       </DropdownMenuContent>
     </MenuPrimitive.Root>
@@ -435,6 +442,7 @@ function DropdownMenuShortcut({
 export { DropdownMenu }
 export type {
   DropdownMenuClickInfo,
+  DropdownMenuAlign,
   DropdownMenuItemConfig,
   DropdownMenuProps,
   DropdownMenuTriggerMode,

@@ -13,6 +13,12 @@ const meta = {
   args: {
     placeholder: "选择日期范围",
   },
+  argTypes: {
+    align: {
+      control: "select",
+      options: ["start", "center", "end"],
+    },
+  },
 } satisfies Meta<typeof RangePicker>
 
 export default meta
@@ -66,6 +72,16 @@ export const SingleMonth: Story = {
       numberOfMonths: 1,
     },
   },
+}
+
+export const Alignments: Story = {
+  render: (args) => (
+    <div className="m-12 flex w-5xl items-center justify-between">
+      <RangePicker {...args} align="start" placeholder="左对齐" />
+      <RangePicker {...args} align="center" placeholder="居中对齐" />
+      <RangePicker {...args} align="end" placeholder="右对齐" />
+    </div>
+  ),
 }
 
 export const Disabled: Story = {

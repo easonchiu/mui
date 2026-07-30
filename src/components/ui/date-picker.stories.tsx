@@ -11,6 +11,12 @@ const meta = {
   args: {
     placeholder: "选择日期",
   },
+  argTypes: {
+    align: {
+      control: "select",
+      options: ["start", "center", "end"],
+    },
+  },
 } satisfies Meta<typeof DatePicker>
 
 export default meta
@@ -46,6 +52,16 @@ export const DateOfBirth: Story = {
       endMonth: new Date(),
     },
   },
+}
+
+export const Alignments: Story = {
+  render: (args) => (
+    <div className="m-12 flex w-3xl items-center justify-between">
+      <DatePicker {...args} align="start" placeholder="左对齐" />
+      <DatePicker {...args} align="center" placeholder="居中对齐" />
+      <DatePicker {...args} align="end" placeholder="右对齐" />
+    </div>
+  ),
 }
 
 export const Disabled: Story = {

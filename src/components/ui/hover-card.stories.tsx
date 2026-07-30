@@ -15,6 +15,12 @@ const meta = {
     title: "mui",
     description: "基于 shadcn/ui 与 Base UI 的共享 React 组件库。",
   },
+  argTypes: {
+    align: {
+      control: "select",
+      options: ["start", "center", "end"],
+    },
+  },
 } satisfies Meta<typeof HoverCard>
 
 export default meta
@@ -64,15 +70,74 @@ export const CustomDelay: Story = {
   },
 }
 
-export const TopAligned: Story = {
+export const BottomAligned: Story = {
   args: {
-    trigger: <Button variant="outline">显示在上方</Button>,
+    trigger: <Button variant="outline">显示在下方</Button>,
     title: "自定义位置",
-    description: "通过 contentProps 设置浮层方向和对齐方式。",
+    description: "通过 contentProps 将浮层方向覆盖为下方。",
+    align: "start",
     contentProps: {
-      side: "top",
-      align: "start",
+      side: "bottom",
     },
+  },
+}
+
+export const Alignments: Story = {
+  render: (args) => (
+    <div className="m-12 flex w-lg items-center justify-between">
+      <HoverCard
+        {...args}
+        align="start"
+        trigger={<Button variant="outline">左对齐</Button>}
+      />
+      <HoverCard
+        {...args}
+        align="center"
+        trigger={<Button variant="outline">居中对齐</Button>}
+      />
+      <HoverCard
+        {...args}
+        align="end"
+        trigger={<Button variant="outline">右对齐</Button>}
+      />
+    </div>
+  ),
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const document = canvasElement.ownerDocument
+    const cases = [
+      { name: "左对齐", edge: "start" },
+      { name: "居中对齐", edge: "center" },
+      { name: "右对齐", edge: "end" },
+    ] as const
+
+    for (const { name, edge } of cases) {
+      const trigger = canvas.getByRole("button", { name })
+      await userEvent.click(trigger)
+
+      await waitFor(() => {
+        const content = document.querySelector<HTMLElement>(
+          '[data-slot="hover-card-content"][data-open]'
+        )
+        expect(content).not.toBeNull()
+
+        const triggerRect = trigger.getBoundingClientRect()
+        const contentRect = content!.getBoundingClientRect()
+
+        if (edge === "start") {
+          expect(Math.abs(contentRect.left - triggerRect.left)).toBeLessThan(
+            0.5
+          )
+        } else if (edge === "center") {
+          const triggerCenter = (triggerRect.left + triggerRect.right) / 2
+          const contentCenter = (contentRect.left + contentRect.right) / 2
+          expect(Math.abs(contentCenter - triggerCenter)).toBeLessThan(0.5)
+        } else {
+          expect(Math.abs(contentRect.right - triggerRect.right)).toBeLessThan(
+            0.5
+          )
+        }
+      })
+    }
   },
 }
 
@@ -97,7 +162,11 @@ export const HoverInteraction: Story = {
       const content = canvasElement.ownerDocument.querySelector(
         '[data-slot="hover-card-content"]'
       )
+      const arrow = canvasElement.ownerDocument.querySelector(
+        '[data-slot="hover-card-arrow"]'
+      )
       expect(content).toHaveTextContent("已打开")
+      expect(arrow).toBeVisible()
     })
   },
 }

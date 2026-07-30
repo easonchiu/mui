@@ -5,7 +5,7 @@ import { CalendarIcon } from "lucide-react"
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
 import { Calendar } from "./calendar"
-import { Popover } from "./popover"
+import { Popover, type PopoverAlign } from "./popover"
 
 type DatePickerProps = {
   value?: Date
@@ -17,6 +17,7 @@ type DatePickerProps = {
   disabled?: boolean
   className?: string
   size?: React.ComponentProps<typeof Button>["size"]
+  align?: PopoverAlign
   open?: boolean
   defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
@@ -37,6 +38,7 @@ function DatePicker(props: DatePickerProps) {
     disabled,
     className,
     size = "default",
+    align = "start",
     open,
     defaultOpen = false,
     onOpenChange,
@@ -77,6 +79,7 @@ function DatePicker(props: DatePickerProps) {
     <Popover
       open={popoverOpen}
       onOpenChange={handleOpenChange}
+      align={align}
       trigger={
         <Button
           variant="outline"
@@ -93,7 +96,6 @@ function DatePicker(props: DatePickerProps) {
         </Button>
       }
       contentProps={{
-        align: "start",
         className: "w-auto gap-0 p-0",
       }}
     >

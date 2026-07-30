@@ -21,14 +21,26 @@ function TooltipProvider({
 type TooltipProps = Omit<TooltipPrimitive.Root.Props, "children"> & {
   children?: React.ReactNode
   trigger?: React.ReactElement
+  sideOffset?: number
   contentProps?: Omit<React.ComponentProps<typeof TooltipContent>, "children">
 }
 
-function Tooltip({ trigger, contentProps, children, ...props }: TooltipProps) {
+function Tooltip({
+  trigger,
+  sideOffset,
+  contentProps,
+  children,
+  ...props
+}: TooltipProps) {
   return (
     <TooltipPrimitive.Root data-slot="tooltip" {...props}>
       {trigger && <TooltipTrigger render={trigger} />}
-      <TooltipContent {...contentProps}>{children}</TooltipContent>
+      <TooltipContent
+        {...contentProps}
+        sideOffset={sideOffset ?? contentProps?.sideOffset}
+      >
+        {children}
+      </TooltipContent>
     </TooltipPrimitive.Root>
   )
 }
@@ -40,7 +52,7 @@ function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
 function TooltipContent({
   className,
   side = "top",
-  sideOffset = 4,
+  sideOffset = 8,
   align = "center",
   alignOffset = 0,
   children,
@@ -62,7 +74,7 @@ function TooltipContent({
         <TooltipPrimitive.Popup
           data-slot="tooltip-content"
           className={cn(
-            "z-50 inline-flex w-fit max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-sm shadow-lg/10 bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-3 data-[side=inline-end]:slide-in-from-left-3 data-[side=inline-start]:slide-in-from-right-3 data-[side=left]:slide-in-from-right-3 data-[side=right]:slide-in-from-left-3 data-[side=top]:slide-in-from-bottom-3 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-none data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-100 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-70 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-70",
+            "z-50 inline-flex w-fit max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-sm bg-foreground px-3 py-1.5 text-xs text-background shadow-lg/10 has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-3 data-[side=inline-end]:slide-in-from-left-3 data-[side=inline-start]:slide-in-from-right-3 data-[side=left]:slide-in-from-right-3 data-[side=right]:slide-in-from-left-3 data-[side=top]:slide-in-from-bottom-3 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-none data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-100 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-70 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-70",
             className
           )}
           {...props}

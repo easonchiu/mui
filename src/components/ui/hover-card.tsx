@@ -9,8 +9,13 @@ type HoverCardContentProps = PreviewCardPrimitive.Popup.Props &
     "align" | "alignOffset" | "side" | "sideOffset"
   >
 
+type HoverCardAlign = NonNullable<
+  PreviewCardPrimitive.Positioner.Props["align"]
+>
+
 type HoverCardProps = Omit<PreviewCardPrimitive.Root.Props, "children"> & {
   trigger: React.ReactElement
+  align?: HoverCardAlign
   title?: React.ReactNode
   description?: React.ReactNode
   children?: React.ReactNode
@@ -21,6 +26,7 @@ type HoverCardProps = Omit<PreviewCardPrimitive.Root.Props, "children"> & {
 
 function HoverCard({
   trigger,
+  align,
   title,
   description,
   children,
@@ -37,7 +43,7 @@ function HoverCard({
         delay={delay}
         closeDelay={closeDelay}
       />
-      <HoverCardContent {...contentProps}>
+      <HoverCardContent {...contentProps} align={align ?? contentProps?.align}>
         {(title !== undefined || description !== undefined) && (
           <div data-slot="hover-card-header" className="flex flex-col gap-1">
             {title !== undefined && (
@@ -66,10 +72,11 @@ function HoverCard({
 
 function HoverCardContent({
   className,
-  side = "bottom",
-  sideOffset = 4,
+  side = "top",
+  sideOffset = 12,
   align = "center",
-  alignOffset = 4,
+  alignOffset = 0,
+  children,
   ...props
 }: HoverCardContentProps) {
   return (
@@ -88,11 +95,17 @@ function HoverCardContent({
             className
           )}
           {...props}
-        />
+        >
+          {children}
+          <PreviewCardPrimitive.Arrow
+            data-slot="hover-card-arrow"
+            className="z-50 size-2.5 translate-y-[calc(-50%+0.5px)] rotate-45 rounded-none border-foreground/15 dark:border-foreground/5 bg-popover data-[side=bottom]:top-1 data-[side=bottom]:rounded-tl-xs data-[side=bottom]:border-t data-[side=bottom]:border-l data-[side=inline-end]:top-1/2! data-[side=inline-end]:-left-1 data-[side=inline-end]:translate-x-[1.5px] data-[side=inline-end]:-translate-y-1/2 data-[side=inline-end]:rounded-bl-xs data-[side=inline-end]:border-b data-[side=inline-end]:border-l data-[side=inline-start]:top-1/2! data-[side=inline-start]:-right-1 data-[side=inline-start]:translate-x-[-1.5px] data-[side=inline-start]:-translate-y-1/2 data-[side=inline-start]:rounded-tr-xs data-[side=inline-start]:border-t data-[side=inline-start]:border-r data-[side=left]:top-1/2! data-[side=left]:-right-1 data-[side=left]:-translate-y-1/2 data-[side=left]:rounded-tr-xs data-[side=left]:border-t data-[side=left]:border-r data-[side=right]:top-1/2! data-[side=right]:-left-1 data-[side=right]:-translate-y-1/2 data-[side=right]:rounded-bl-xs data-[side=right]:border-b data-[side=right]:border-l data-[side=top]:-bottom-2.5 data-[side=top]:rounded-br-xs data-[side=top]:border-r data-[side=top]:border-b"
+          />
+        </PreviewCardPrimitive.Popup>
       </PreviewCardPrimitive.Positioner>
     </PreviewCardPrimitive.Portal>
   )
 }
 
 export { HoverCard }
-export type { HoverCardProps }
+export type { HoverCardAlign, HoverCardProps }

@@ -3,9 +3,12 @@ import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
 
 import { cn } from "../../lib/utils"
 
+type PopoverAlign = NonNullable<PopoverPrimitive.Positioner.Props["align"]>
+
 type PopoverProps = Omit<PopoverPrimitive.Root.Props, "children"> & {
   children?: React.ReactNode
   trigger?: React.ReactElement
+  align?: PopoverAlign
   title?: React.ReactNode
   description?: React.ReactNode
   contentProps?: Omit<React.ComponentProps<typeof PopoverContent>, "children">
@@ -13,6 +16,7 @@ type PopoverProps = Omit<PopoverPrimitive.Root.Props, "children"> & {
 
 function Popover({
   trigger,
+  align,
   title,
   description,
   contentProps,
@@ -22,7 +26,10 @@ function Popover({
   return (
     <PopoverPrimitive.Root data-slot="popover" {...props}>
       {trigger && <PopoverTrigger render={trigger} />}
-      <PopoverContent {...contentProps}>
+      <PopoverContent
+        {...contentProps}
+        align={align ?? contentProps?.align}
+      >
         {(title || description) && (
           <PopoverHeader>
             {title && <PopoverTitle>{title}</PopoverTitle>}
@@ -112,4 +119,4 @@ function PopoverDescription({
 }
 
 export { Popover }
-export type { PopoverProps }
+export type { PopoverAlign, PopoverProps }

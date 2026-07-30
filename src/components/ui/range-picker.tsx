@@ -11,7 +11,7 @@ import type { DateRange } from "react-day-picker"
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
 import { Calendar } from "./calendar"
-import { Popover } from "./popover"
+import { Popover, type PopoverAlign } from "./popover"
 
 type RangePickerProps = {
   value?: DateRange
@@ -25,6 +25,7 @@ type RangePickerProps = {
   disabled?: boolean
   className?: string
   size?: React.ComponentProps<typeof Button>["size"]
+  align?: PopoverAlign
   open?: boolean
   defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
@@ -47,6 +48,7 @@ function RangePicker(props: RangePickerProps) {
     disabled,
     className,
     size = "default",
+    align = "start",
     open,
     defaultOpen = false,
     onOpenChange,
@@ -116,6 +118,7 @@ function RangePicker(props: RangePickerProps) {
     <Popover
       open={popoverOpen}
       onOpenChange={handleOpenChange}
+      align={align}
       trigger={
         <Button
           variant="outline"
@@ -123,7 +126,7 @@ function RangePicker(props: RangePickerProps) {
           disabled={disabled}
           data-empty={!selectedRange?.from || undefined}
           className={cn(
-            "min-w-72 justify-start text-left font-normal tracking-normal normal-case rounded-sm hover:border-ring/50 hover:bg-input/10 data-empty:text-muted-foreground",
+            "min-w-72 justify-start rounded-sm text-left font-normal tracking-normal normal-case hover:border-ring/50 hover:bg-input/10 data-empty:text-muted-foreground",
             className
           )}
         >
@@ -132,7 +135,6 @@ function RangePicker(props: RangePickerProps) {
         </Button>
       }
       contentProps={{
-        align: "start",
         "aria-label": calendarLabel,
         className: "w-auto gap-0 p-0",
       }}
