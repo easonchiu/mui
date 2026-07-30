@@ -50,11 +50,11 @@ function Progress({
 
       <ProgressPrimitive.Track
         data-slot="progress-track"
-        className="relative h-2 w-full overflow-hidden rounded-xs bg-muted"
+        className="relative h-2 w-full overflow-hidden rounded-full bg-muted"
       >
         <ProgressPrimitive.Indicator
           data-slot="progress-indicator"
-          className="h-full rounded-xs bg-primary transition-all duration-300 ease-out data-indeterminate:w-1/3 data-indeterminate:animate-pulse"
+          className="h-full rounded-full bg-primary transition-all duration-300 ease-out data-indeterminate:w-1/3 data-indeterminate:animate-pulse"
         />
       </ProgressPrimitive.Track>
     </ProgressPrimitive.Root>

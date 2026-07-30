@@ -5,7 +5,7 @@ import { Loader2Icon } from "lucide-react"
 import { cn } from "../../lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-xs border border-transparent bg-clip-padding text-xs font-semibold tracking-widest whitespace-nowrap uppercase transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/10 active:not-aria-[haspopup]:scale-95 disabled:pointer-events-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5 [&:disabled:not([data-loading])]:opacity-50",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-sm border border-transparent bg-clip-padding text-sm tracking-widest whitespace-nowrap uppercase transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/10 active:not-aria-[haspopup]:scale-[0.98] disabled:pointer-events-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5 [&:disabled:not([data-loading])]:opacity-50",
   {
     variants: {
       variant: {
@@ -33,10 +33,14 @@ const buttonVariants = cva(
         "icon-sm": "size-9",
         "icon-lg": "size-11",
       },
+      pill: {
+        true: "rounded-full",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      pill: false,
     },
   }
 )
@@ -45,6 +49,7 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  pill = false,
   loading = false,
   disabled,
   children,
@@ -57,7 +62,7 @@ function Button({
     <ButtonPrimitive
       data-slot="button"
       data-loading={loading || undefined}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, pill, className }))}
       aria-busy={loading || undefined}
       disabled={disabled || loading}
       {...props}

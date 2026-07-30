@@ -79,7 +79,7 @@ function Combobox<Value>({
                       aria-label={
                         ariaLabel ? `打开${ariaLabel}选项` : "打开选项"
                       }
-                      className="group/combobox-trigger flex size-6 items-center justify-center rounded-xs outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:opacity-50 data-pressed:bg-transparent"
+                      className="group/combobox-trigger flex size-6 items-center justify-center rounded-sm outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:opacity-50 data-pressed:bg-transparent"
                     >
                       <ChevronDownIcon className="pointer-events-none size-3.5 text-muted-foreground transition-transform group-data-[popup-open]/combobox-trigger:rotate-180" />
                     </ComboboxPrimitive.Trigger>
@@ -90,7 +90,7 @@ function Combobox<Value>({
                       data-slot="combobox-clear"
                       disabled={disabled}
                       aria-label="清除"
-                      className="flex size-6 items-center justify-center rounded-xs outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:opacity-50"
+                      className="flex size-6 items-center justify-center rounded-sm outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:opacity-50"
                     >
                       <XIcon className="pointer-events-none size-3.5" />
                     </ComboboxPrimitive.Clear>
@@ -113,7 +113,7 @@ function Combobox<Value>({
           <ComboboxPrimitive.Popup
             data-slot="combobox-content"
             className={cn(
-              "group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) origin-(--transform-origin) overflow-hidden rounded-xs bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+              "group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) origin-(--transform-origin) overflow-hidden rounded-sm bg-popover text-popover-foreground shadow-lg/5 ring-1 ring-foreground/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
               contentClassName
             )}
           >
@@ -137,7 +137,7 @@ function Combobox<Value>({
                       index={index}
                       disabled={option.disabled}
                       data-slot="combobox-item"
-                      className="relative flex w-full cursor-pointer items-center gap-2.5 rounded-xs transition-all py-2 pr-8 pl-3 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&:not([data-disabled]):hover]:bg-accent [&:not([data-disabled]):hover]:text-accent-foreground"
+                      className="relative flex w-full cursor-pointer items-center gap-2.5 rounded-sm transition-all py-2 pr-8 pl-3 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&:not([data-disabled]):hover]:bg-accent [&:not([data-disabled]):hover]:text-accent-foreground"
                     >
                       {option.render ?? option.label}
                       <ComboboxPrimitive.ItemIndicator

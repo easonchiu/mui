@@ -1,6 +1,14 @@
 import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { MoreHorizontalIcon } from "lucide-react"
+import {
+  BookOpenIcon,
+  Code2Icon,
+  CopyIcon,
+  MoreHorizontalIcon,
+  Settings2Icon,
+  Trash2Icon,
+} from "lucide-react"
+import { expect, waitFor } from "storybook/test"
 
 import { Button } from "./button"
 import { DropdownMenu, type DropdownMenuItemConfig } from "./dropdown-menu"
@@ -11,17 +19,28 @@ const items = [
     key: "common",
     label: "常用操作",
     children: [
-      { key: "source", label: "查看源码" },
-      { key: "copy", label: "复制导入语句", shortcut: "⌘C" },
+      { key: "source", label: "查看源码", icon: <Code2Icon /> },
+      {
+        key: "copy",
+        label: "复制导入语句",
+        icon: <CopyIcon />,
+        shortcut: "⌘C",
+      },
     ],
   },
   { type: "divider" },
   {
     key: "more",
     label: "更多操作",
+    icon: <Settings2Icon />,
     children: [
-      { key: "docs", label: "打开文档" },
-      { key: "delete", label: "删除组件", danger: true },
+      { key: "docs", label: "打开文档", icon: <BookOpenIcon /> },
+      {
+        key: "delete",
+        label: "删除组件",
+        icon: <Trash2Icon />,
+        danger: true,
+      },
     ],
   },
 ] satisfies DropdownMenuItemConfig[]
@@ -50,6 +69,33 @@ export const Default: Story = {
       }
     />
   ),
+}
+
+export const Hover: Story = {
+  render: (args) => (
+    <DropdownMenu
+      {...args}
+      triggerMode="hover"
+      trigger={<Button variant="outline">悬停打开菜单</Button>}
+    />
+  ),
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    await userEvent.hover(
+      canvas.getByRole("button", { name: "悬停打开菜单" })
+    )
+
+    await waitFor(() => {
+      const content = canvasElement.ownerDocument.querySelector(
+        '[data-slot="dropdown-menu-content"]'
+      )
+      expect(content).toHaveTextContent("查看源码")
+    })
+  },
+  parameters: {
+    a11y: {
+      test: "todo",
+    },
+  },
 }
 
 export const Selectable: Story = {

@@ -37,6 +37,9 @@ const meta = {
         "icon-lg",
       ],
     },
+    pill: {
+      control: "boolean",
+    },
   },
 } satisfies Meta<typeof Button>
 
@@ -85,6 +88,13 @@ export const WithIcon: Story = {
       上传
     </Button>
   ),
+}
+
+export const Pill: Story = {
+  args: {
+    pill: true,
+    children: "胶囊按钮",
+  },
 }
 
 export const Sizes: Story = {

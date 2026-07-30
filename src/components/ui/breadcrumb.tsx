@@ -33,7 +33,7 @@ function Breadcrumb({
     >
       <ol
         data-slot="breadcrumb-list"
-        className="flex flex-wrap items-center gap-1.5 text-xs tracking-wide wrap-break-word text-muted-foreground uppercase sm:gap-2.5"
+        className="flex flex-wrap items-center gap-1.5 text-sm tracking-wide wrap-break-word text-muted-foreground uppercase sm:gap-2.5"
       >
         {items.map((item, index) => {
           const isCurrent = index === items.length - 1

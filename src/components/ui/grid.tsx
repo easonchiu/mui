@@ -14,14 +14,14 @@ function Grid({ columns = 3, className, children, ...props }: GridProps) {
     <div
       data-slot="grid"
       className={cn(
-        "overflow-hidden rounded-xs border border-border bg-background shadow-sm",
+        "overflow-hidden rounded-xs border border-border/60 bg-background",
         className
       )}
       {...props}
     >
       <div
         data-slot="grid-body"
-        className="-mb-px grid w-[calc(100%+1px)] bg-background [&>*]:border-r [&>*]:border-b [&>*]:border-border"
+        className="-mb-px grid w-[calc(100%+1px)] bg-background [&>*]:border-r [&>*]:border-b [&>*]:border-border/60"
         style={{
           gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
         }}
