@@ -186,7 +186,7 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-pointer items-center gap-2.5 rounded-sm py-2 pr-8 pl-3 text-sm outline-hidden transition-all select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 [&:not([data-disabled]):hover]:bg-accent [&:not([data-disabled]):hover]:text-accent-foreground",
+        "relative flex w-full cursor-pointer items-center gap-2.5 rounded-sm py-2 pr-8 pl-3 text-sm outline-hidden transition-colors delay-0 duration-100 select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground motion-reduce:transition-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 [&[data-highlighted]:hover]:delay-75",
         className
       )}
       {...props}
