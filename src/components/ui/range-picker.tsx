@@ -126,7 +126,7 @@ function RangePicker(props: RangePickerProps) {
           disabled={disabled}
           data-empty={!selectedRange?.from || undefined}
           className={cn(
-            "min-w-72 justify-start rounded-sm text-left font-normal tracking-normal normal-case hover:border-ring/50 hover:bg-input/10 data-empty:text-muted-foreground",
+            "min-w-72 justify-start rounded-sm text-left font-normal tracking-normal normal-case hover:border-ring/20 hover:bg-muted data-empty:text-muted-foreground",
             className
           )}
         >
