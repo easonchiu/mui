@@ -8,6 +8,7 @@ type InputProps = Omit<React.ComponentProps<"input">, "prefix" | "size"> & {
   suffix?: React.ReactNode
   containerClassName?: string
   size?: "xs" | "sm" | "default" | "lg"
+  error?: boolean
 }
 
 function Input({
@@ -17,7 +18,9 @@ function Input({
   className,
   type,
   disabled,
+  error = false,
   size = "default",
+  "aria-invalid": ariaInvalid,
   ...props
 }: InputProps) {
   const focusInput = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -32,9 +35,10 @@ function Input({
     <div
       data-slot="input-container"
       data-disabled={disabled || undefined}
+      data-error={error || undefined}
       data-size={size}
       className={cn(
-        "group/input flex w-full min-w-0 items-center gap-2 rounded-sm border border-input bg-transparent px-3 transition-[color,border-color,box-shadow] focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/10 has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-2 has-[[aria-invalid=true]]:ring-destructive/20 data-[size=default]:h-10 data-[size=lg]:h-11 data-[size=lg]:px-4 data-[size=sm]:h-9 data-[size=xs]:h-7 data-[size=xs]:gap-1 data-[size=xs]:px-2 dark:has-[[aria-invalid=true]]:border-destructive/50 dark:has-[[aria-invalid=true]]:ring-destructive/40 data-disabled:cursor-not-allowed data-disabled:opacity-50",
+        "group/input flex w-full min-w-0 items-center gap-2 rounded-sm bg-transparent px-3 ring ring-input transition-[color,ring-color,box-shadow] focus-within:ring-3 focus-within:ring-ring2 has-[[aria-invalid=true]]:ring-destructive/50 has-[[aria-invalid=true]]:focus-within:ring-destructive/50 data-[size=default]:h-10 data-[size=lg]:h-11 data-[size=lg]:px-4 data-[size=sm]:h-9 data-[size=xs]:h-7 data-[size=xs]:gap-1 data-[size=xs]:px-2 data-disabled:cursor-not-allowed data-disabled:opacity-50",
         containerClassName
       )}
       onClick={focusInput}
@@ -51,6 +55,7 @@ function Input({
       <InputPrimitive
         type={type}
         disabled={disabled}
+        aria-invalid={error || ariaInvalid || undefined}
         data-slot="input"
         className={cn(
           "h-full min-w-0 flex-1 border-0 bg-transparent px-0 py-1 text-sm outline-none group-data-[size=xs]/input:text-xs file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed",

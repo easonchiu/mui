@@ -53,6 +53,19 @@ export const Disabled: Story = {
   ),
 }
 
+export const Error: Story = {
+  render: () => (
+    <Field
+      data-invalid
+      className="w-80"
+      label="邮箱"
+      description="请输入有效的邮箱地址。"
+    >
+      <Input error defaultValue="invalid-email" />
+    </Field>
+  ),
+}
+
 export const SizeComparison: Story = {
   render: () => (
     <div className="grid w-[28rem] gap-3">
@@ -78,6 +91,13 @@ export const SizeComparison: Story = {
 
 export const DarkTheme: Story = {
   ...WithSuffix,
+  globals: {
+    theme: "dark",
+  },
+}
+
+export const ErrorDarkTheme: Story = {
+  ...Error,
   globals: {
     theme: "dark",
   },

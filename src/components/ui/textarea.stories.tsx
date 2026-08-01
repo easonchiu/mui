@@ -35,14 +35,16 @@ export const Sizes: Story = {
   ),
 }
 
-export const Invalid: Story = {
+export const Error: Story = {
   render: () => (
-    <Textarea
+    <Field
+      data-invalid
       className="w-96"
-      aria-label="错误文本域"
-      aria-invalid
-      defaultValue="内容格式不正确"
-    />
+      label="组件说明"
+      description="组件说明格式不正确。"
+    >
+      <Textarea error defaultValue="内容格式不正确" />
+    </Field>
   ),
 }
 
@@ -59,6 +61,13 @@ export const Disabled: Story = {
 
 export const DarkTheme: Story = {
   ...Default,
+  globals: {
+    theme: "dark",
+  },
+}
+
+export const ErrorDarkTheme: Story = {
+  ...Error,
   globals: {
     theme: "dark",
   },

@@ -21,7 +21,7 @@ function Grid({ columns = 3, className, children, ...props }: GridProps) {
     >
       <div
         data-slot="grid-body"
-        className="-mb-px grid w-[calc(100%+1px)] bg-background [&>*]:border-r [&>*]:border-b [&>*]:border-border/60"
+        className="-mt-px -ml-px grid w-[calc(100%+1px)] bg-background [&>*]:border-t [&>*]:border-l [&>*]:border-border/60"
         style={{
           gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
         }}

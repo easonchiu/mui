@@ -4,6 +4,7 @@ import {
   CircleXIcon,
   InfoIcon,
   SparklesIcon,
+  TriangleAlertIcon,
 } from "lucide-react"
 
 import { Alert } from "./alert"
@@ -19,7 +20,7 @@ const meta = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "destructive"],
+      options: ["default", "warning", "destructive"],
     },
   },
 } satisfies Meta<typeof Alert>
@@ -58,6 +59,18 @@ export const Destructive: Story = {
   ),
 }
 
+export const Warning: Story = {
+  render: () => (
+    <Alert
+      className="max-w-xl"
+      variant="warning"
+      icon={<TriangleAlertIcon />}
+      title="存储空间即将用尽"
+      description="当前剩余空间不足 10%，请及时清理不再使用的文件。"
+    />
+  ),
+}
+
 export const WithAction: Story = {
   render: () => (
     <Alert
@@ -76,6 +89,20 @@ export const WithAction: Story = {
 
 export const DarkTheme: Story = {
   ...Default,
+  globals: {
+    theme: "dark",
+  },
+}
+
+export const WarningDarkTheme: Story = {
+  ...Warning,
+  globals: {
+    theme: "dark",
+  },
+}
+
+export const DestructiveDarkTheme: Story = {
+  ...Destructive,
   globals: {
     theme: "dark",
   },
