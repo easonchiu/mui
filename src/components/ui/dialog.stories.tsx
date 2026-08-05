@@ -20,7 +20,7 @@ export const Default: Story = {
     description: "修改组件的显示名称。",
     okText: "保存",
     actionProps: {
-      variant: "destructive",
+      variant: "danger",
     }
   },
   render: (args) => (

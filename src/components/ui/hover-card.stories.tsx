@@ -80,6 +80,82 @@ export const BottomAligned: Story = {
       side: "bottom",
     },
   },
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "显示在下方" }))
+
+    await waitFor(() => {
+      const content = canvasElement.ownerDocument.querySelector<HTMLElement>(
+        '[data-slot="hover-card-content"][data-open]'
+      )
+      const arrow = canvasElement.ownerDocument.querySelector<HTMLElement>(
+        '[data-slot="hover-card-arrow"][data-side="bottom"]'
+      )
+
+      expect(content).not.toBeNull()
+      expect(arrow).not.toBeNull()
+
+      const contentRect = content!.getBoundingClientRect()
+      const arrowRect = arrow!.getBoundingClientRect()
+      const arrowCenterY = arrowRect.top + arrowRect.height / 2
+
+      expect(arrowCenterY).toBeLessThanOrEqual(contentRect.top)
+      expect(arrowRect.bottom).toBeGreaterThan(contentRect.top)
+    })
+  },
+}
+
+export const SideAligned: Story = {
+  render: (args) => (
+    <div className="flex min-h-96 items-center justify-center gap-24">
+      <HoverCard
+        {...args}
+        trigger={<Button variant="outline">显示在左侧</Button>}
+        contentProps={{ side: "left" }}
+      />
+      <HoverCard
+        {...args}
+        trigger={<Button variant="outline">显示在右侧</Button>}
+        contentProps={{ side: "right" }}
+      />
+    </div>
+  ),
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const document = canvasElement.ownerDocument
+    const cases = [
+      { name: "显示在左侧", side: "left" },
+      { name: "显示在右侧", side: "right" },
+    ] as const
+
+    for (const { name, side } of cases) {
+      await userEvent.click(canvas.getByRole("button", { name }))
+
+      await waitFor(() => {
+        const content = document.querySelector<HTMLElement>(
+          `[data-slot="hover-card-content"][data-side="${side}"][data-open]`
+        )
+        const arrow = document.querySelector<HTMLElement>(
+          `[data-slot="hover-card-arrow"][data-side="${side}"]`
+        )
+
+        expect(content).not.toBeNull()
+        expect(arrow).not.toBeNull()
+
+        const contentRect = content!.getBoundingClientRect()
+        const arrowRect = arrow!.getBoundingClientRect()
+        const arrowCenterX = arrowRect.left + arrowRect.width / 2
+        const contentEdge =
+          side === "left" ? contentRect.right : contentRect.left
+
+        if (side === "left") {
+          expect(arrowCenterX).toBeGreaterThanOrEqual(contentEdge)
+          expect(arrowRect.left).toBeLessThan(contentEdge)
+        } else {
+          expect(arrowCenterX).toBeLessThanOrEqual(contentEdge)
+          expect(arrowRect.right).toBeGreaterThan(contentEdge)
+        }
+      })
+    }
+  },
 }
 
 export const Alignments: Story = {
