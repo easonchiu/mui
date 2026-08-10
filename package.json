@@ -1,6 +1,6 @@
 {
   "name": "mui",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "基于 shadcn/ui、Base UI 和 Tailwind CSS 的 React UI 组件库",
   "type": "module",
   "packageManager": "pnpm@10.28.2",
