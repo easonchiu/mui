@@ -21,6 +21,7 @@ function injectLibraryStyles(): Plugin {
 export default defineConfig({
   optimizeDeps: {
     include: [
+      "@base-ui/react/context-menu",
       "@base-ui/react/preview-card",
       "@base-ui/react/radio",
       "@base-ui/react/radio-group",

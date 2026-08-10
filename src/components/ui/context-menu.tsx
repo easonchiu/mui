@@ -64,6 +64,7 @@ type ContextMenuItemConfig =
 type ContextMenuProps = Omit<ContextMenuPrimitive.Root.Props, "children"> & {
   trigger: React.ReactElement
   items: ReadonlyArray<ContextMenuItemConfig>
+  openOnDoubleClick?: boolean
   align?: ContextMenuAlign
   sideOffset?: number
   onItemClick?: (info: ContextMenuClickInfo) => void
@@ -76,15 +77,34 @@ type ContextMenuProps = Omit<ContextMenuPrimitive.Root.Props, "children"> & {
 function ContextMenu({
   trigger,
   items,
+  openOnDoubleClick = false,
   align,
   sideOffset,
   onItemClick,
   contentProps,
   ...props
 }: ContextMenuProps) {
+  const handleDoubleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!openOnDoubleClick) return
+
+    event.preventDefault()
+    event.currentTarget.dispatchEvent(
+      new MouseEvent("contextmenu", {
+        bubbles: true,
+        cancelable: true,
+        clientX: event.clientX,
+        clientY: event.clientY,
+        button: 2,
+      })
+    )
+  }
+
   return (
     <ContextMenuPrimitive.Root data-slot="context-menu" {...props}>
-      <ContextMenuTrigger render={trigger} />
+      <ContextMenuTrigger
+        render={trigger}
+        onDoubleClick={handleDoubleClick}
+      />
       <ContextMenuContent
         {...contentProps}
         align={align ?? contentProps?.align}

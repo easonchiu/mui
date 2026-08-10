@@ -62,9 +62,12 @@ Select 的复杂场景仍可使用 `SelectRoot`、`SelectTrigger` 等内部结�
 
 除 Button 和 Card 外，当前还包含 Alert Dialog、Avatar、Badge、Breadcrumb、
 Calendar、Checkbox、Combobox、Data Table、Date Picker、Range Picker、Dialog、Modal、Drawer、
-Dropdown Menu、Field、Form Item、Hover Card、Input、Pagination、
+Context Menu、Dropdown Menu、Field、Form Item、Hover Card、Input、Pagination、
 Grid、Popover、Progress、Radio、Select、Skeleton、Slider、Spinner、Switch、
 Tabs、Textarea、Toast、Tooltip 和 Separator。
+
+`ContextMenu` 默认响应右键。需要在画布等场景同时响应双击时，设置
+`openOnDoubleClick`，菜单会在双击位置打开。
 
 Toast 需要在应用根部渲染一次 `Toaster`，之后可在任意位置使用
 `toast.success()`、`toast.error()` 或 `toast.add()` 发送通知。通知默认显示在
