@@ -137,7 +137,7 @@ function Combobox<Value>({
                       index={index}
                       disabled={option.disabled}
                       data-slot="combobox-item"
-                      className="relative flex w-full cursor-pointer items-center gap-2.5 rounded-sm transition-all py-2 pr-8 pl-3 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&:not([data-disabled]):hover]:bg-accent [&:not([data-disabled]):hover]:text-accent-foreground"
+                      className="relative flex w-full cursor-pointer items-center gap-2.5 rounded-sm py-2 pr-8 pl-3 text-sm outline-hidden transition-all select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&:not([data-disabled]):hover]:bg-accent [&:not([data-disabled]):hover]:text-accent-foreground"
                     >
                       {option.render ?? option.label}
                       <ComboboxPrimitive.ItemIndicator

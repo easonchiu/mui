@@ -21,7 +21,7 @@ export const Default: Story = {
     okText: "保存",
     actionProps: {
       variant: "danger",
-    }
+    },
   },
   render: (args) => (
     <Dialog {...args} trigger={<Button variant="outline">打开对话框</Button>}>
