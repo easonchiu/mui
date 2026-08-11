@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 
 import tailwindcss from "@tailwindcss/vite"
@@ -18,6 +19,22 @@ function injectLibraryStyles(): Plugin {
   }
 }
 
+function emitThemeStyles(): Plugin {
+  return {
+    name: "emit-theme-styles",
+    generateBundle() {
+      this.emitFile({
+        type: "asset",
+        fileName: "theme.css",
+        source: readFileSync(
+          new URL("./src/theme.css", import.meta.url),
+          "utf8"
+        ),
+      })
+    },
+  }
+}
+
 export default defineConfig({
   optimizeDeps: {
     include: [
@@ -33,7 +50,7 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  plugins: [react(), tailwindcss(), injectLibraryStyles()],
+  plugins: [react(), tailwindcss(), emitThemeStyles(), injectLibraryStyles()],
   build: {
     lib: {
       entry: "src/entry.ts",

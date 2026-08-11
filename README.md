@@ -27,6 +27,17 @@ export function Example() {
 
 组件库使用系统字体，不会额外加载 Web Font。
 
+使用 Tailwind CSS v4 的业务项目可以直接导入组件库的完整主题配置：
+
+```css
+@import "tailwindcss";
+@import "mui/theme.css";
+```
+
+`mui/theme.css` 保留未经预编译的 `@theme inline` 和暗色模式变体，业务项目因此
+可以直接使用 `ring-ring2`、`text-foreground`、`rounded-sm` 等主题工具类。
+组件运行时使用的 `:root` 和 `.dark` 变量值仍由 `mui/styles.css` 提供。
+
 常见业务场景提供接近 antd 的简化 API：
 
 ```tsx
