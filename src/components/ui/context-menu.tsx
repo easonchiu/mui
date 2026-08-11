@@ -341,13 +341,17 @@ function ContextMenuSubTrigger({
 
 function ContextMenuSubContent({
   className,
+  alignOffset = -6,
+  sideOffset = 10,
   ...props
 }: React.ComponentProps<typeof ContextMenuContent>) {
   return (
     <ContextMenuContent
       data-slot="context-menu-sub-content"
       className={cn("min-w-36 shadow-lg", className)}
+      alignOffset={alignOffset}
       side="right"
+      sideOffset={sideOffset}
       {...props}
     />
   )
@@ -449,7 +453,7 @@ function ContextMenuShortcut({
     <span
       data-slot="context-menu-shortcut"
       className={cn(
-        "ms-auto rounded-sm text-[11px] leading-none tracking-widest text-muted-foreground group-data-highlighted/context-menu-item:text-accent-foreground",
+        "ms-auto rounded-sm text-[12px] leading-none tracking-widest text-muted-foreground group-data-highlighted/context-menu-item:text-accent-foreground",
         className
       )}
       {...props}

@@ -78,6 +78,68 @@ export const Default: Story = {
       }
     />
   ),
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "组件操作" }))
+
+    const ownerDocument = canvasElement.ownerDocument
+    const submenuTrigger = await waitFor(() => {
+      const trigger = ownerDocument.querySelector<HTMLElement>(
+        '[data-slot="dropdown-menu-sub-trigger"]'
+      )
+      expect(trigger).toBeVisible()
+      return trigger!
+    })
+
+    await userEvent.hover(submenuTrigger)
+
+    await waitFor(() => {
+      const mainMenu = ownerDocument.querySelector<HTMLElement>(
+        '[data-slot="dropdown-menu-content"][data-open]'
+      )
+      const submenu = ownerDocument.querySelector<HTMLElement>(
+        '[data-slot="dropdown-menu-sub-content"][data-open]'
+      )
+      const firstSubmenuItem = submenu?.querySelector<HTMLElement>(
+        '[data-slot="dropdown-menu-item"]'
+      )
+
+      expect(submenu).toBeVisible()
+
+      const mainRect = mainMenu!.getBoundingClientRect()
+      const submenuRect = submenu!.getBoundingClientRect()
+      const triggerRect = submenuTrigger.getBoundingClientRect()
+      const firstSubmenuItemRect = firstSubmenuItem!.getBoundingClientRect()
+      const horizontalGap = Math.max(
+        submenuRect.left - mainRect.right,
+        mainRect.left - submenuRect.right
+      )
+
+      expect(horizontalGap).toBeGreaterThanOrEqual(4)
+      expect(firstSubmenuItemRect.top).toBeCloseTo(triggerRect.top, 0)
+    })
+
+    const sourceItem = Array.from(
+      ownerDocument.querySelectorAll<HTMLElement>(
+        '[data-slot="dropdown-menu-item"]'
+      )
+    ).find((item) => item.textContent?.includes("查看源码"))
+
+    expect(sourceItem).not.toBeUndefined()
+    await userEvent.hover(sourceItem!)
+    await waitFor(() => {
+      const submenu = ownerDocument.querySelector(
+        '[data-slot="dropdown-menu-sub-content"]'
+      )
+      expect(submenu).not.toBeInTheDocument()
+    })
+    await userEvent.click(sourceItem!)
+    await waitFor(() => {
+      const menu = ownerDocument.querySelector(
+        '[data-slot="dropdown-menu-content"]'
+      )
+      expect(menu).not.toBeInTheDocument()
+    })
+  },
 }
 
 export const Hover: Story = {

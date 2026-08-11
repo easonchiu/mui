@@ -124,7 +124,7 @@ function ContextMenuDemo() {
       key: "trash",
       label: "移到废纸篓",
       icon: <Trash2Icon />,
-      shortcut: "⌘⌫",
+      shortcut: "D",
       danger: true,
     },
   ] satisfies ContextMenuItemConfig[]
@@ -169,6 +169,38 @@ export const Default: Story = {
     expect(checkbox).toHaveAttribute("aria-checked", "true")
     expect(checkedRadio).toHaveTextContent("名称")
 
+    const submenuTrigger = canvasElement.ownerDocument.querySelector(
+      '[data-slot="context-menu-sub-trigger"]'
+    )
+    expect(submenuTrigger).toBeVisible()
+    await userEvent.hover(submenuTrigger!)
+
+    await waitFor(() => {
+      const mainMenu = canvasElement.ownerDocument.querySelector<HTMLElement>(
+        '[data-slot="context-menu-content"][data-open]'
+      )
+      const submenu = canvasElement.ownerDocument.querySelector<HTMLElement>(
+        '[data-slot="context-menu-sub-content"][data-open]'
+      )
+      const firstSubmenuItem = submenu?.querySelector<HTMLElement>(
+        '[data-slot="context-menu-item"]'
+      )
+
+      expect(submenu).toBeVisible()
+
+      const mainRect = mainMenu!.getBoundingClientRect()
+      const submenuRect = submenu!.getBoundingClientRect()
+      const triggerRect = submenuTrigger!.getBoundingClientRect()
+      const firstSubmenuItemRect = firstSubmenuItem!.getBoundingClientRect()
+      const horizontalGap = Math.max(
+        submenuRect.left - mainRect.right,
+        mainRect.left - submenuRect.right
+      )
+
+      expect(horizontalGap).toBeGreaterThanOrEqual(4)
+      expect(firstSubmenuItemRect.top).toBeCloseTo(triggerRect.top, 0)
+    })
+
     const openItem = Array.from(
       canvasElement.ownerDocument.querySelectorAll<HTMLElement>(
         '[data-slot="context-menu-item"]'
@@ -176,8 +208,21 @@ export const Default: Story = {
     ).find((item) => item.textContent?.includes("打开"))
 
     expect(openItem).not.toBeUndefined()
+    await userEvent.hover(openItem!)
+    await waitFor(() => {
+      const submenu = canvasElement.ownerDocument.querySelector(
+        '[data-slot="context-menu-sub-content"]'
+      )
+      expect(submenu).not.toBeInTheDocument()
+    })
     await userEvent.click(openItem!)
     expect(onItemClick).toHaveBeenCalledWith({ key: "open" })
+    await waitFor(() => {
+      const menu = canvasElement.ownerDocument.querySelector(
+        '[data-slot="context-menu-content"]'
+      )
+      expect(menu).not.toBeInTheDocument()
+    })
   },
 }
 

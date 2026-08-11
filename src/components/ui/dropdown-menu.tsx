@@ -318,9 +318,9 @@ function DropdownMenuSubTrigger({
 
 function DropdownMenuSubContent({
   align = "start",
-  alignOffset = -3,
+  alignOffset = -6,
   side = "right",
-  sideOffset = 0,
+  sideOffset = 10,
   className,
   ...props
 }: React.ComponentProps<typeof DropdownMenuContent>) {
@@ -434,7 +434,7 @@ function DropdownMenuShortcut({
     <span
       data-slot="dropdown-menu-shortcut"
       className={cn(
-        "ml-auto rounded-sm text-[11px] leading-none tracking-widest text-muted-foreground group-focus/dropdown-menu-item:text-accent-foreground",
+        "ml-auto rounded-sm text-[12px] leading-none tracking-widest text-muted-foreground group-focus/dropdown-menu-item:text-accent-foreground",
         className
       )}
       {...props}
