@@ -33,7 +33,7 @@
     "storybook:no-open": "storybook dev -p 6006 --no-open",
     "test": "vitest run --project=storybook",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "prepack": "pnpm build"
+    "prepack": "pnpm install --prod=false --ignore-scripts && pnpm build"
   },
   "peerDependencies": {
     "react": ">=18 <20",
