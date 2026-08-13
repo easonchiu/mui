@@ -137,10 +137,7 @@ function AlertDialogHeader({
   return (
     <div
       data-slot="alert-dialog-header"
-      className={cn(
-        "grid place-items-center gap-2 text-center sm:place-items-start sm:text-left",
-        className
-      )}
+      className={cn("grid place-items-start gap-2 text-left", className)}
       {...props}
     />
   )
