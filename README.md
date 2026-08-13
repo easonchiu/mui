@@ -80,6 +80,9 @@ Tabs、Textarea、Toast、Tooltip 和 Separator。
 `ContextMenu` 默认响应右键。需要在画布等场景同时响应双击时，设置
 `openOnDoubleClick`，菜单会在双击位置打开。
 
+拖拽落点等需要由业务决定菜单位置的场景，可以通过 ref 调用
+`openAt({ x, y })`，坐标使用浏览器视口坐标。
+
 Toast 需要在应用根部渲染一次 `Toaster`，之后可在任意位置使用
 `toast.success()`、`toast.error()` 或 `toast.add()` 发送通知。通知默认显示在
 页面右上角。

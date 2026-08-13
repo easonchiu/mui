@@ -8,6 +8,15 @@ type ContextMenuClickInfo = {
   key: React.Key
 }
 
+type ContextMenuPosition = {
+  x: number
+  y: number
+}
+
+type ContextMenuHandle = {
+  openAt: (position: ContextMenuPosition) => void
+}
+
 type ContextMenuAlign = NonNullable<
   ContextMenuPrimitive.Positioner.Props["align"]
 >
@@ -74,44 +83,73 @@ type ContextMenuProps = Omit<ContextMenuPrimitive.Root.Props, "children"> & {
   >
 }
 
-function ContextMenu({
-  trigger,
-  items,
-  openOnDoubleClick = false,
-  align,
-  sideOffset,
-  onItemClick,
-  contentProps,
-  ...props
-}: ContextMenuProps) {
-  const handleDoubleClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (!openOnDoubleClick) return
-
-    event.preventDefault()
-    event.currentTarget.dispatchEvent(
-      new MouseEvent("contextmenu", {
-        bubbles: true,
-        cancelable: true,
-        clientX: event.clientX,
-        clientY: event.clientY,
-        button: 2,
-      })
-    )
-  }
-
-  return (
-    <ContextMenuPrimitive.Root data-slot="context-menu" {...props}>
-      <ContextMenuTrigger render={trigger} onDoubleClick={handleDoubleClick} />
-      <ContextMenuContent
-        {...contentProps}
-        align={align ?? contentProps?.align}
-        sideOffset={sideOffset ?? contentProps?.sideOffset}
-      >
-        {renderContextMenuItems(items, onItemClick)}
-      </ContextMenuContent>
-    </ContextMenuPrimitive.Root>
+function dispatchContextMenu(
+  target: HTMLElement,
+  position: ContextMenuPosition
+) {
+  target.dispatchEvent(
+    new MouseEvent("contextmenu", {
+      bubbles: true,
+      cancelable: true,
+      clientX: position.x,
+      clientY: position.y,
+      button: 2,
+    })
   )
 }
+
+const ContextMenu = React.forwardRef<ContextMenuHandle, ContextMenuProps>(
+  function ContextMenu(
+    {
+      trigger,
+      items,
+      openOnDoubleClick = false,
+      align,
+      sideOffset,
+      onItemClick,
+      contentProps,
+      ...props
+    },
+    ref
+  ) {
+    const triggerRef = React.useRef<HTMLDivElement>(null)
+
+    React.useImperativeHandle(ref, () => ({
+      openAt: (position) => {
+        if (triggerRef.current) {
+          dispatchContextMenu(triggerRef.current, position)
+        }
+      },
+    }))
+
+    const handleDoubleClick = (event: React.MouseEvent<HTMLElement>) => {
+      if (!openOnDoubleClick) return
+
+      event.preventDefault()
+      dispatchContextMenu(event.currentTarget, {
+        x: event.clientX,
+        y: event.clientY,
+      })
+    }
+
+    return (
+      <ContextMenuPrimitive.Root data-slot="context-menu" {...props}>
+        <ContextMenuTrigger
+          ref={triggerRef}
+          render={trigger}
+          onDoubleClick={handleDoubleClick}
+        />
+        <ContextMenuContent
+          {...contentProps}
+          align={align ?? contentProps?.align}
+          sideOffset={sideOffset ?? contentProps?.sideOffset}
+        >
+          {renderContextMenuItems(items, onItemClick)}
+        </ContextMenuContent>
+      </ContextMenuPrimitive.Root>
+    )
+  }
+)
 
 function renderContextMenuItems(
   items: ReadonlyArray<ContextMenuItemConfig>,
@@ -213,18 +251,19 @@ function renderContextMenuItems(
   })
 }
 
-function ContextMenuTrigger({
-  className,
-  ...props
-}: ContextMenuPrimitive.Trigger.Props) {
+const ContextMenuTrigger = React.forwardRef<
+  HTMLDivElement,
+  ContextMenuPrimitive.Trigger.Props
+>(function ContextMenuTrigger({ className, ...props }, ref) {
   return (
     <ContextMenuPrimitive.Trigger
+      ref={ref}
       data-slot="context-menu-trigger"
       className={cn("select-none", className)}
       {...props}
     />
   )
-}
+})
 
 function ContextMenuContent({
   className,
@@ -465,6 +504,8 @@ export { ContextMenu }
 export type {
   ContextMenuAlign,
   ContextMenuClickInfo,
+  ContextMenuHandle,
   ContextMenuItemConfig,
+  ContextMenuPosition,
   ContextMenuProps,
 }

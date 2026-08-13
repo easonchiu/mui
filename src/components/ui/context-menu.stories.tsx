@@ -12,7 +12,11 @@ import {
 } from "lucide-react"
 import { expect, fn, waitFor } from "storybook/test"
 
-import { ContextMenu, type ContextMenuItemConfig } from "./context-menu"
+import {
+  ContextMenu,
+  type ContextMenuHandle,
+  type ContextMenuItemConfig,
+} from "./context-menu"
 
 const basicItems = [
   { key: "open", label: "打开" },
@@ -237,6 +241,53 @@ export const Basic: Story = {
       }
     />
   ),
+}
+
+function ProgrammaticContextMenuDemo() {
+  const menuRef = React.useRef<ContextMenuHandle>(null)
+
+  return (
+    <div className="flex h-56 w-96 flex-col items-start gap-6 rounded-sm border border-dashed border-border p-6">
+      <button
+        className="rounded-sm border border-border bg-background px-3 py-2 text-sm"
+        type="button"
+        onClick={(event) =>
+          menuRef.current?.openAt({
+            x: event.clientX + 80,
+            y: event.clientY + 40,
+          })
+        }
+      >
+        在指定位置打开
+      </button>
+      <ContextMenu
+        ref={menuRef}
+        trigger={
+          <div className="flex flex-1 items-center text-sm text-muted-foreground">
+            也可以在此区域右键
+          </div>
+        }
+        items={basicItems}
+      />
+    </div>
+  )
+}
+
+export const Programmatic: Story = {
+  render: () => <ProgrammaticContextMenuDemo />,
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    await userEvent.click(
+      canvas.getByRole("button", { name: "在指定位置打开" })
+    )
+
+    await waitFor(() => {
+      const menu = canvasElement.ownerDocument.querySelector(
+        '[data-slot="context-menu-content"][data-open]'
+      )
+      expect(menu).toBeVisible()
+      expect(menu).toHaveTextContent("打开")
+    })
+  },
 }
 
 export const DarkTheme: Story = {
