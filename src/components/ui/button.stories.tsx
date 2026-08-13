@@ -48,6 +48,12 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 
+export const MixedCase: Story = {
+  args: {
+    children: "Submit",
+  },
+}
+
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-3">

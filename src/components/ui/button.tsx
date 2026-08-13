@@ -5,7 +5,7 @@ import { Loader2Icon } from "lucide-react"
 import { cn } from "../../lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-sm border border-transparent bg-clip-padding text-sm tracking-widest whitespace-nowrap uppercase transition-all outline-none select-none focus-visible:border-ring2 focus-visible:ring-2 focus-visible:ring-ring2 active:not-aria-[haspopup]:scale-[0.98] disabled:pointer-events-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5 [&:disabled:not([data-loading])]:opacity-50",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-sm border border-transparent bg-clip-padding text-sm tracking-widest whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring2 focus-visible:ring-2 focus-visible:ring-ring2 active:not-aria-[haspopup]:scale-[0.98] disabled:pointer-events-none aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5 [&:disabled:not([data-loading])]:opacity-50",
   {
     variants: {
       variant: {
