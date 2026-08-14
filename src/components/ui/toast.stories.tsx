@@ -130,6 +130,7 @@ export const Interaction: Story = {
 
       expect(viewport).toHaveClass("top-4")
       expect(viewport).not.toHaveClass("bottom-4")
+      expect(viewport).not.toHaveClass("w-auto")
       expect(toast).toHaveTextContent("操作已完成")
     })
   },
