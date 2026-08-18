@@ -24,6 +24,7 @@ function ToastDemo({ mode = "default" }: { mode?: "default" | "action" }) {
     manager.add({
       title: "操作已完成",
       description: "数据已经成功保存。",
+      type: "success",
     })
   }
 

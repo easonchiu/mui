@@ -11,9 +11,9 @@ const alertVariants = cva(
         default:
           "border-border/60 bg-background text-foreground dark:bg-border/40",
         warning:
-          "border-yellow-600/20 bg-yellow-500/5 text-yellow-800 *:data-[slot=alert-description]:text-yellow-900 dark:border-yellow-500/10 dark:bg-yellow-500/10 dark:text-yellow-500 dark:*:data-[slot=alert-description]:text-yellow-500",
+          "border-yellow-500/20 bg-yellow-500/5 text-yellow-600 *:data-[slot=alert-description]:text-yellow-600 dark:border-yellow-400/10 dark:bg-yellow-400/10 dark:text-yellow-600 dark:*:data-[slot=alert-description]:text-yellow-600",
         destructive:
-          "border-red-600/20 bg-red-600/5 text-red-700 *:data-[slot=alert-description]:text-red-800 dark:border-red-500/10 dark:bg-red-500/10 dark:text-red-500 dark:*:data-[slot=alert-description]:text-red-500",
+          "border-red-400/20 bg-red-400/5 text-red-600 *:data-[slot=alert-description]:text-red-600 dark:border-red-400/10 dark:bg-red-400/10 dark:text-red-500 dark:*:data-[slot=alert-description]:text-red-500",
       },
     },
     defaultVariants: {
