@@ -37,13 +37,8 @@ export const Sizes: Story = {
 
 export const Error: Story = {
   render: () => (
-    <Field
-      data-invalid
-      className="w-96"
-      label="组件说明"
-      description="组件说明格式不正确。"
-    >
-      <Textarea error defaultValue="内容格式不正确" />
+    <Field className="w-96" label="组件说明" error="组件说明格式不正确。">
+      <Textarea defaultValue="内容格式不正确" />
     </Field>
   ),
 }
@@ -61,6 +56,7 @@ export const Disabled: Story = {
 
 export const DarkTheme: Story = {
   ...Default,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },
@@ -68,6 +64,7 @@ export const DarkTheme: Story = {
 
 export const ErrorDarkTheme: Story = {
   ...Error,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

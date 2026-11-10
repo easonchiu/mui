@@ -2,7 +2,7 @@ import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Button } from "./button"
-import { FormItem } from "./form-item"
+import { Field } from "./field"
 import { Input } from "./input"
 import { Modal } from "./modal"
 
@@ -34,9 +34,9 @@ export const Default: Story = {
           onOpenChange={setOpen}
           onOk={() => setOpen(false)}
         >
-          <FormItem label="名称" htmlFor="modal-component-name">
+          <Field label="名称" htmlFor="modal-component-name">
             <Input id="modal-component-name" defaultValue="Button" />
-          </FormItem>
+          </Field>
         </Modal>
       </>
     )

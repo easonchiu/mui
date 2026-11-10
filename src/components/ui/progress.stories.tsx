@@ -37,6 +37,7 @@ export const Indeterminate: Story = {
 }
 
 export const DarkTheme: Story = {
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

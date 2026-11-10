@@ -73,11 +73,6 @@ export const Destructive: Story = {
     variant: "destructive",
     children: "危险操作",
   },
-  parameters: {
-    a11y: {
-      test: "todo",
-    },
-  },
 }
 
 export const Danger: Story = {
@@ -157,6 +152,7 @@ export const Loading: Story = {
 
 export const LoadingDarkTheme: Story = {
   ...Loading,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },
@@ -164,6 +160,7 @@ export const LoadingDarkTheme: Story = {
 
 export const DarkTheme: Story = {
   ...AllVariants,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

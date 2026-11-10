@@ -44,6 +44,7 @@ export const Variants: Story = {
 
 export const DarkTheme: Story = {
   ...Variants,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

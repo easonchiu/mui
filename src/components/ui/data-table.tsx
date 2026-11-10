@@ -76,9 +76,12 @@ function DataTable<RecordType>({
       </TableHeader>
       <TableBody>
         {loading ? (
-          <TableRow>
+          <TableRow className="hover:bg-transparent">
             <TableCell colSpan={columns.length} className="h-24 text-center">
-              <Spinner className="mx-auto" />
+              <Spinner
+                className="mx-auto size-4.5 text-muted-foreground/60"
+                strokeWidth={1.5}
+              />
             </TableCell>
           </TableRow>
         ) : dataSource.length === 0 ? (

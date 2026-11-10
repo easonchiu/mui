@@ -20,6 +20,8 @@ const fieldVariants = cva("group/field flex w-full gap-3", {
 
 type FieldControlProps = {
   id?: string
+  required?: boolean
+  "aria-invalid"?: React.AriaAttributes["aria-invalid"]
   "aria-labelledby"?: string
   "aria-describedby"?: string
 }
@@ -28,6 +30,8 @@ type FieldProps = Omit<React.ComponentProps<"div">, "children"> &
   VariantProps<typeof fieldVariants> & {
     label?: React.ReactNode
     description?: React.ReactNode
+    error?: React.ReactNode
+    required?: boolean
     htmlFor?: string
     children: React.ReactElement
   }
@@ -35,6 +39,8 @@ type FieldProps = Omit<React.ComponentProps<"div">, "children"> &
 function Field({
   label,
   description,
+  error,
+  required,
   htmlFor,
   children,
   className,
@@ -46,13 +52,21 @@ function Field({
   const controlId = htmlFor ?? child.props.id ?? `${generatedId}-control`
   const labelId = `${controlId}-label`
   const descriptionId = `${controlId}-description`
+  const hasError = Boolean(error)
+  const descriptionContent = hasError ? error : description
   const control = React.cloneElement(child, {
     id: controlId,
+    required: required ?? child.props.required,
+    "aria-invalid": hasError || child.props["aria-invalid"],
     "aria-labelledby":
       child.props["aria-labelledby"] ?? (label ? labelId : undefined),
     "aria-describedby":
-      child.props["aria-describedby"] ??
-      (description ? descriptionId : undefined),
+      [
+        child.props["aria-describedby"],
+        descriptionContent != null ? descriptionId : undefined,
+      ]
+        .filter(Boolean)
+        .join(" ") || undefined,
   })
 
   return (
@@ -60,6 +74,7 @@ function Field({
       role="group"
       data-slot="field"
       data-orientation={orientation}
+      data-invalid={hasError || undefined}
       className={cn(fieldVariants({ orientation }), className)}
       {...props}
     >
@@ -71,18 +86,24 @@ function Field({
           className="w-fit leading-relaxed group-data-[disabled=true]/field:opacity-50"
         >
           {label}
+          {required && (
+            <span className="text-destructive" aria-hidden="true">
+              *
+            </span>
+          )}
         </Label>
       )}
 
       {control}
 
-      {description !== undefined && (
+      {descriptionContent !== undefined && (
         <p
           id={descriptionId}
           data-slot="field-description"
-          className="text-left text-xs leading-normal font-normal tracking-normal text-muted-foreground normal-case group-data-[invalid=true]/field:text-destructive"
+          role={hasError ? "alert" : undefined}
+          className="text-left text-xs leading-normal font-normal tracking-normal text-muted-foreground normal-case group-data-[invalid=true]/field:text-[color-mix(in_oklch,var(--destructive),var(--foreground)_25%)]"
         >
-          {description}
+          {descriptionContent}
         </p>
       )}
     </div>

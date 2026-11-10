@@ -291,6 +291,7 @@ export const Programmatic: Story = {
 }
 
 export const DarkTheme: Story = {
+  tags: ["!autodocs"],
   render: () => <ContextMenuDemo />,
   globals: {
     theme: "dark",

@@ -55,13 +55,8 @@ export const Disabled: Story = {
 
 export const Error: Story = {
   render: () => (
-    <Field
-      data-invalid
-      className="w-80"
-      label="邮箱"
-      description="请输入有效的邮箱地址。"
-    >
-      <Input error defaultValue="invalid-email" />
+    <Field className="w-80" label="邮箱" error="请输入有效的邮箱地址。">
+      <Input defaultValue="invalid-email" />
     </Field>
   ),
 }
@@ -91,6 +86,7 @@ export const SizeComparison: Story = {
 
 export const DarkTheme: Story = {
   ...WithSuffix,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },
@@ -98,6 +94,7 @@ export const DarkTheme: Story = {
 
 export const ErrorDarkTheme: Story = {
   ...Error,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

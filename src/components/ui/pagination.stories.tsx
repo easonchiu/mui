@@ -50,6 +50,7 @@ export const Disabled: Story = {
 }
 
 export const DarkTheme: Story = {
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

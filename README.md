@@ -5,11 +5,23 @@
 
 ## 安装与使用
 
-发布到包仓库后，在业务项目中安装：
+当前通过 GitHub tag 发布，在业务项目中安装指定版本：
 
 ```bash
-pnpm add mui
+pnpm add github:easonchiu/mui#v0.1.19
 ```
+
+使用 pnpm 10 时，Git 依赖需要构建授权。先在业务项目的
+`pnpm-workspace.yaml` 中加入以下配置，再执行安装：
+
+```yaml
+allowBuilds:
+  mui: true
+```
+
+pnpm 11 要求包含 Git 来源的精确依赖标识。如果安装提示
+`ERR_PNPM_GIT_DEP_PREPARE_NOT_ALLOWED`，按错误提示中的精确标识配置
+`allowBuilds` 后重试。
 
 组件入口会自动加载组件库样式，不需要额外导入 CSS：
 
@@ -25,7 +37,9 @@ export function Example() {
 }
 ```
 
-组件库使用系统字体，不会额外加载 Web Font。
+组件库与 Portal 使用相同的全局字体：优先使用 Plus Jakarta Sans Variable，
+回退到 Inter Variable；中文依次使用苹方、冬青黑体和微软雅黑。
+字体文件随组件库样式打包，无需额外引入或请求外部字体服务。
 
 使用 Tailwind CSS v4 的业务项目可以直接导入组件库的完整主题配置：
 
@@ -41,7 +55,7 @@ export function Example() {
 常见业务场景提供接近 antd 的简化 API：
 
 ```tsx
-import { Button, FormItem, Input, Modal, Select } from "mui"
+import { Button, Field, Input, Modal, Select } from "mui"
 
 <Select
   options={[
@@ -51,9 +65,9 @@ import { Button, FormItem, Input, Modal, Select } from "mui"
   placeholder="请选择状态"
 />
 
-<FormItem label="名称" required error={nameError}>
+<Field label="名称" required description="请输入容易识别的名称。" error={nameError}>
   <Input value={name} onChange={(event) => setName(event.target.value)} />
-</FormItem>
+</Field>
 
 <Modal
   title="编辑信息"
@@ -69,12 +83,15 @@ import { Button, FormItem, Input, Modal, Select } from "mui"
 Select 的复杂场景仍可使用 `SelectRoot`、`SelectTrigger` 等内部结构组件。
 浮层组件会自动处理 Trigger 和 Content，只需直接传入触发元素与内容。
 
+Field 统一提供标签、说明、必填标记和错误提示。`error` 优先于 `description`
+展示，并自动为子控件设置 `aria-invalid`；`required` 同时传递给子控件。
+
 ## 已包含组件
 
 除 Button 和 Card 外，当前还包含 Alert Dialog、Avatar、Badge、Breadcrumb、
 Calendar、Checkbox、Combobox、Data Table、Date Picker、Range Picker、Dialog、Modal、Drawer、
-Context Menu、Dropdown Menu、Field、Form Item、Hover Card、Input、Pagination、
-Grid、Popover、Progress、Radio、Select、Skeleton、Slider、Spinner、Switch、
+Context Menu、Dropdown Menu、Field、Hover Card、Input、Pagination、
+Popover、Progress、Radio、Select、Skeleton、Slider、Spinner、Switch、
 Tabs、Textarea、Toast、Tooltip 和 Separator。
 
 `ContextMenu` 默认响应右键。需要在画布等场景同时响应双击时，设置
@@ -131,3 +148,12 @@ pnpm build
 pnpm build:storybook
 pnpm pack
 ```
+
+## 版本发布
+
+版本通过 `easonchiu/mui` 仓库的 `vX.Y.Z` tag 发布。不要使用 `npm publish`，
+npm 公共仓库中的同名 `mui` 包不属于本项目。
+
+发布前更新 `package.json` 版本号、上面的安装版本和 `CHANGELOG.md`，
+完成验证与打包检查，然后提交本次变更，为该提交创建对应版本 tag，
+将提交与 tag 一起推送到 `origin`。安装 Git 依赖时，`prepack` 会构建 `dist`。

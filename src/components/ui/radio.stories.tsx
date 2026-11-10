@@ -79,6 +79,7 @@ export const Horizontal: Story = {
 }
 
 export const DarkTheme: Story = {
+  tags: ["!autodocs"],
   render: () => (
     <RadioGroup defaultValue="comfortable">
       <Radio value="default" text="默认" />

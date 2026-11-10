@@ -19,9 +19,9 @@ function injectLibraryStyles(): Plugin {
   }
 }
 
-function emitThemeStyles(): Plugin {
+function emitLibraryAssets(): Plugin {
   return {
-    name: "emit-theme-styles",
+    name: "emit-library-assets",
     generateBundle() {
       this.emitFile({
         type: "asset",
@@ -31,6 +31,19 @@ function emitThemeStyles(): Plugin {
           "utf8"
         ),
       })
+
+      for (const font of ["inter", "plus-jakarta-sans"]) {
+        this.emitFile({
+          type: "asset",
+          fileName: `fonts/${font}-LICENSE.txt`,
+          source: readFileSync(
+            new URL(
+              import.meta.resolve(`@fontsource-variable/${font}/LICENSE`)
+            ),
+            "utf8"
+          ),
+        })
+      }
     },
   }
 }
@@ -50,7 +63,7 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  plugins: [react(), tailwindcss(), emitThemeStyles(), injectLibraryStyles()],
+  plugins: [react(), tailwindcss(), emitLibraryAssets(), injectLibraryStyles()],
   build: {
     lib: {
       entry: "src/entry.ts",

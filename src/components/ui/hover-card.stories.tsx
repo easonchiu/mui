@@ -219,6 +219,7 @@ export const Alignments: Story = {
 
 export const DarkTheme: Story = {
   ...UserProfile,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

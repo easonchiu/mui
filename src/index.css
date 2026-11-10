@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@import "./fonts.css";
 @import "./theme.css";
 
 :root {
@@ -19,7 +20,7 @@
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: var(--color-red-400);
+  --destructive: var(--color-red-600);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.371 0 0);
@@ -92,5 +93,7 @@
 
   html {
     @apply font-sans;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
   }
 }

@@ -11,7 +11,7 @@ const alertVariants = cva(
         default:
           "border-border/60 bg-background text-foreground dark:bg-border/40",
         warning:
-          "border-yellow-500/20 bg-yellow-500/5 text-yellow-600 *:data-[slot=alert-description]:text-yellow-600 dark:border-yellow-400/10 dark:bg-yellow-400/10 dark:text-yellow-600 dark:*:data-[slot=alert-description]:text-yellow-600",
+          "border-yellow-500/20 bg-yellow-500/5 text-yellow-700 *:data-[slot=alert-description]:text-yellow-700 dark:border-yellow-400/10 dark:bg-yellow-400/10 dark:text-yellow-600 dark:*:data-[slot=alert-description]:text-yellow-600",
         destructive:
           "border-red-400/20 bg-red-400/5 text-red-600 *:data-[slot=alert-description]:text-red-600 dark:border-red-400/10 dark:bg-red-400/10 dark:text-red-500 dark:*:data-[slot=alert-description]:text-red-500",
       },

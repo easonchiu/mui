@@ -35,6 +35,7 @@ export const Disabled: Story = {
 }
 
 export const DarkTheme: Story = {
+  tags: ["!autodocs"],
   args: {
     text: "公开展示",
     defaultChecked: true,

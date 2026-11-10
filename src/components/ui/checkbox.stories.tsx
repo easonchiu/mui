@@ -53,6 +53,7 @@ export const WithoutText: Story = {
 }
 
 export const DarkTheme: Story = {
+  tags: ["!autodocs"],
   args: {
     defaultChecked: true,
   },

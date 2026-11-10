@@ -63,3 +63,10 @@ export const Empty: Story = {
     dataSource: [],
   },
 }
+
+export const DarkTheme: Story = {
+  tags: ["!autodocs"],
+  globals: {
+    theme: "dark",
+  },
+}

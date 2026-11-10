@@ -114,6 +114,7 @@ export const WithAction: Story = {
 
 export const DarkTheme: Story = {
   ...Types,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

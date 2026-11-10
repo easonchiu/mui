@@ -89,6 +89,7 @@ export const WithAction: Story = {
 
 export const DarkTheme: Story = {
   ...Default,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },
@@ -96,6 +97,7 @@ export const DarkTheme: Story = {
 
 export const WarningDarkTheme: Story = {
   ...Warning,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },
@@ -103,6 +105,7 @@ export const WarningDarkTheme: Story = {
 
 export const DestructiveDarkTheme: Story = {
   ...Destructive,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

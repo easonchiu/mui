@@ -64,6 +64,7 @@ export const ContentOnly: Story = {
 
 export const DarkTheme: Story = {
   ...Default,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },

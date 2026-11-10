@@ -52,6 +52,7 @@ export const Group: Story = {
 }
 
 export const DarkTheme: Story = {
+  tags: ["!autodocs"],
   args: {
     badge: true,
   },

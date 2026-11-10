@@ -72,6 +72,7 @@ export const Disabled: Story = {
 
 export const DarkTheme: Story = {
   ...WithValue,
+  tags: ["!autodocs"],
   globals: {
     theme: "dark",
   },
