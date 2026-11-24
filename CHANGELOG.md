@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.20
+
+- TableHeader、TableRow 和 TableFooter 显式使用 `border-border` 主题边框色，修复业务项目引入 Tailwind CSS 基础样式后表格分隔线显示为黑色的问题。
+- DataTable 自动继承修复，无需业务项目添加全局边框颜色兜底样式。
+
 ## 0.1.19
 
 - 统一 Input、Textarea、Select、DatePicker、RangePicker 的边框、阴影和激活状态。

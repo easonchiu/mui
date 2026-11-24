@@ -8,7 +8,7 @@
 当前通过 GitHub tag 发布，在业务项目中安装指定版本：
 
 ```bash
-pnpm add github:easonchiu/mui#v0.1.19
+pnpm add github:easonchiu/mui#v0.1.20
 ```
 
 使用 pnpm 10 时，Git 依赖需要构建授权。先在业务项目的
