@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.21
+
+- Toast 根节点显式使用 `border-border` 主题边框色，修复业务项目引入 Tailwind CSS 基础样式后通知边框显示为黑色的问题。
+
 ## 0.1.20
 
 - TableHeader、TableRow 和 TableFooter 显式使用 `border-border` 主题边框色，修复业务项目引入 Tailwind CSS 基础样式后表格分隔线显示为黑色的问题。
