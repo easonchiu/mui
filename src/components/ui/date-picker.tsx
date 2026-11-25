@@ -87,7 +87,7 @@ function DatePicker(props: DatePickerProps) {
           disabled={disabled}
           data-empty={!selectedDate || undefined}
           className={cn(
-            "min-w-48 justify-start border-input text-left font-normal tracking-normal normal-case shadow-xs hover:border-ring/20 hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring2/50 data-empty:text-muted-foreground data-popup-open:border-ring2 data-popup-open:ring-3 data-popup-open:ring-ring2/50",
+            "min-w-48 justify-start border-border text-left font-normal tracking-normal normal-case shadow-xs hover:border-ring/20 hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring2/50 data-empty:text-muted-foreground data-popup-open:border-ring2 data-popup-open:ring-3 data-popup-open:ring-ring2/50",
             className
           )}
         >
@@ -96,7 +96,7 @@ function DatePicker(props: DatePickerProps) {
         </Button>
       }
       contentProps={{
-        className: "w-auto gap-0 p-0",
+        className: "w-auto gap-0 overflow-hidden p-0 shadow-xs",
       }}
     >
       <Calendar

@@ -4,12 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../lib/utils"
 
 const tabsListVariants = cva(
-  "group/tabs-list inline-flex w-fit items-center justify-center rounded-md p-1 text-muted-foreground group-data-horizontal/tabs:h-10 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col",
+  "group/tabs-list inline-flex w-fit items-center justify-center gap-1 rounded-md text-muted-foreground group-data-horizontal/tabs:h-10 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col",
   {
     variants: {
       variant: {
-        default: "bg-foreground/8 dark:bg-muted",
-        line: "gap-1 bg-transparent",
+        default: "bg-muted-foreground/10 p-[3px]",
+        line: "bg-transparent p-1",
       },
     },
     defaultVariants: {
@@ -78,10 +78,10 @@ function Tabs({
             disabled={item.disabled}
             data-slot="tabs-trigger"
             className={cn(
-              "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-2 rounded-sm border border-transparent px-4 py-1.5 text-sm tracking-wider whitespace-nowrap text-foreground/60 uppercase transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start group-data-vertical/tabs:px-4 group-data-vertical/tabs:py-2 focus-visible:border-ring2 focus-visible:ring-3 focus-visible:ring-ring2 focus-visible:outline-1 focus-visible:outline-ring2 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5 [&:not([aria-disabled=true]):hover]:text-foreground dark:[&:not([aria-disabled=true]):hover]:text-foreground",
-              "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent group-data-[variant=line]/tabs-list:data-active:shadow-none dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent",
-              "data-active:bg-background data-active:text-foreground data-active:shadow-sm/5 dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground",
-              "after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100"
+              "relative inline-flex flex-1 items-center justify-center rounded-sm border border-transparent text-sm whitespace-nowrap text-foreground/60 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start focus-visible:border-ring2 focus-visible:ring-3 focus-visible:ring-ring2 focus-visible:outline-1 focus-visible:outline-ring2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-active:text-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&:not([aria-disabled=true]):hover]:text-foreground dark:[&:not([aria-disabled=true]):hover]:text-foreground",
+              variant === "line"
+                ? "h-[calc(100%-1px)] gap-2 px-4 py-1.5 tracking-wider uppercase transition-all group-data-vertical/tabs:py-2 after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 active:scale-[0.98] dark:text-muted-foreground data-active:after:opacity-100 dark:data-active:text-foreground [&_svg:not([class*='size-'])]:size-3.5"
+                : "h-full gap-1.5 px-3 font-semibold group-data-vertical/tabs:py-1.5 not-data-active:hover:bg-muted-foreground/10 data-active:bg-background data-active:shadow-xs/10 dark:data-active:border-border [&_svg:not([class*='size-'])]:size-4"
             )}
           >
             {item.label}

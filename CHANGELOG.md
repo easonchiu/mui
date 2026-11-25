@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.22
+
+- 统一基础组件使用 `border-border` 主题边框色，修复业务项目中边框颜色不一致的问题。
+- 移除 Button 默认、描边和危险按钮的阴影。
+- 统一 Select、DatePicker、RangePicker 弹层的边框、阴影和圆角裁切。
+- 统一 Card、表单控件、菜单、Popover、Tabs、Switch、Checkbox、Radio 和 HoverCard 的边框主题。
+
 ## 0.1.21
 
 - Toast 根节点显式使用 `border-border` 主题边框色，修复业务项目引入 Tailwind CSS 基础样式后通知边框显示为黑色的问题。
